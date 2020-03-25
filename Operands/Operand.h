@@ -16,4 +16,4 @@ private:
 	T value_;
 };
 
-#endif //AVM_OPERAND_H
+#endif //AVM_OPERAND_Hч

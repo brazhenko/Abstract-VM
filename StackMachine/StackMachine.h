@@ -20,7 +20,7 @@ private:
 
 	StackMachine& operator=(StackMachine&);
 
-	std::stack<IOperand*> stack_;
+	std::vector<IOperand*> stack_;
 	std::vector<Instruction> instructions_;
 
 	void Push(IOperand *op);

@@ -3,6 +3,7 @@
 //
 
 #include "OInt16.h"
+#include <sstream>
 
 eOperandType OInt16::getType() const
 {
@@ -46,6 +47,12 @@ IOperand const *OInt16::operator%(const IOperand& rhs) const
 
 std::string const& OInt16::toString() const
 {
-	std::string s;
-	return s;
+	return raw_;
+}
+
+OInt16::OInt16(const std::string &raw)
+{
+	std::stringstream ss(raw);
+	ss >> value_;
+	raw_ = raw;
 }

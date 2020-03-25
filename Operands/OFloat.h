@@ -12,6 +12,7 @@ class OFloat : public IOperand
 public:
 public:
 	explicit OFloat(float val);
+	explicit OFloat(const std::string &raw);
 	[[nodiscard]] int getPrecision() const override ;
 	[[nodiscard]] eOperandType  getType() const override;
 	IOperand const* operator+(const IOperand& rhs) const override;
@@ -22,6 +23,7 @@ public:
 	[[nodiscard]] std::string const & toString() const override;
 private:
 	float value_;
+	std::string raw_;
 };
 
 #endif //AVM_OFLOAT_H

@@ -11,6 +11,7 @@ class OInt32 : public IOperand
 {
 public:
 	explicit OInt32(int32_t val);
+	explicit OInt32(const std::string &raw);
 	[[nodiscard]] int getPrecision() const override ;
 	[[nodiscard]] eOperandType  getType() const override;
 	IOperand const* operator+(const IOperand& rhs) const override;
@@ -21,6 +22,7 @@ public:
 	[[nodiscard]] std::string const & toString() const override;
 private:
 	int32_t value_;
+	std::string raw_;
 };
 
 #endif //AVM_OINT32_H

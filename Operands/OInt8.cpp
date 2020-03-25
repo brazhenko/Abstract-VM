@@ -3,6 +3,7 @@
 //
 
 #include "OInt8.h"
+#include <sstream>
 
 OInt8::OInt8(int8_t val)
 {
@@ -41,11 +42,17 @@ IOperand const *OInt8::operator%(const IOperand& rhs) const
 
 std::string const& OInt8::toString() const
 {
-	std::string k;
-	return k;
+	return raw_;
 }
 
 int OInt8::getPrecision() const
 {
 	return -1;
+}
+
+OInt8::OInt8(const std::string &raw)
+{
+	std::stringstream ss(raw);
+	ss >> value_;
+	raw_ = raw;
 }

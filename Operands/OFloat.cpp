@@ -3,6 +3,7 @@
 //
 
 #include "OFloat.h"
+#include <sstream>
 
 eOperandType OFloat::getType() const
 {
@@ -46,6 +47,12 @@ IOperand const *OFloat::operator%(const IOperand& rhs) const
 
 std::string const& OFloat::toString() const
 {
-	std::string s;
-	return s;
+	return raw_;
+}
+
+OFloat::OFloat(const std::string &raw)
+{
+	std::stringstream ss(raw);
+	ss >> value_;
+	raw_ = raw;
 }

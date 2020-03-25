@@ -11,6 +11,7 @@ class ODouble : public IOperand
 {
 public:
 	explicit ODouble(double val);
+	explicit ODouble(const std::string &raw);
 	[[nodiscard]] int getPrecision() const override ;
 	[[nodiscard]] eOperandType  getType() const override;
 	IOperand const* operator+(const IOperand& rhs) const override;
@@ -21,6 +22,7 @@ public:
 	[[nodiscard]] std::string const & toString() const override;
 private:
 	double value_;
+	std::string raw_;
 };
 
 #endif //AVM_ODOUBLE_H

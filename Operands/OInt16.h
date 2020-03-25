@@ -11,6 +11,7 @@ class OInt16 : public IOperand
 {
 public:
 	explicit OInt16(int16_t val);
+	explicit OInt16(const std::string &raw);
 	[[nodiscard]] int getPrecision() const override ;
 	[[nodiscard]] eOperandType  getType() const override;
 	IOperand const* operator+(const IOperand& rhs) const override;
@@ -22,6 +23,7 @@ public:
 
 private:
 	int16_t value_;
+	std::string raw_;
 };
 
 #endif //AVM_OINT16_H

@@ -78,12 +78,12 @@ void StackMachine::AddInstruction(Instruction in)
 
 void StackMachine::Push(IOperand *op)
 {
-	stack_.push(op);
+	stack_.emplace_back(op);
 }
 
 void StackMachine::Pop()
 {
-	stack_.pop();
+	stack_.pop_back();
 }
 
 void StackMachine::Dump() const
@@ -93,7 +93,6 @@ void StackMachine::Dump() const
 
 void StackMachine::Assert(const IOperand *op)
 {
-	auto t = stack_.top();
 
 }
 
@@ -124,7 +123,8 @@ void StackMachine::Mod()
 
 void StackMachine::Print() const
 {
-
+	for (const auto &it: stack_)
+		std::cerr << it->toString() << std::endl;
 }
 
 void StackMachine::Exit()

@@ -3,6 +3,7 @@
 //
 
 #include "ODouble.h"
+#include <sstream>
 
 eOperandType ODouble::getType() const
 {
@@ -46,6 +47,12 @@ IOperand const *ODouble::operator%(const IOperand& rhs) const
 
 std::string const& ODouble::toString() const
 {
-	std::string s;
-	return s;
+	return raw_;
+}
+
+ODouble::ODouble(const std::string &raw)
+{
+	std::stringstream ss(raw);
+	ss >> value_;
+	raw_ = raw;
 }

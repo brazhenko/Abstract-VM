@@ -11,6 +11,7 @@ class OInt8 : public IOperand
 {
 public:
 	explicit OInt8(int8_t val);
+	explicit OInt8(const std::string &raw);
 	[[nodiscard]] int getPrecision() const override ;
 	[[nodiscard]] eOperandType  getType() const override;
 	IOperand const* operator+(const IOperand& rhs) const override;
@@ -21,7 +22,8 @@ public:
 	[[nodiscard]] std::string const & toString() const override;
 
 private:
-	int8_t value_;
+	int8_t value_{};
+	std::string raw_;
 };
 
 #endif //AVM_OINT8_H
