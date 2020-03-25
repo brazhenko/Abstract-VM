@@ -69,6 +69,7 @@ void StackMachine::Execute()
 		}
 	}
 	instructions_.clear();
+	throw std::
 }
 
 void StackMachine::AddInstruction(Instruction in)
