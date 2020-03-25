@@ -11,7 +11,6 @@ class FactoryOperand
 {
 public:
 	[[nodiscard]] const IOperand* createOperand(eOperandType type, const std::string& value) const;
-
 private:
 	[[nodiscard]] const IOperand* createInt8(const std::string& value) const;
 	[[nodiscard]] const IOperand* createInt16(const std::string& value) const;

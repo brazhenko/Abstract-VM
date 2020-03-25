@@ -25,7 +25,7 @@ enum class eInstructionType
 class Instruction
 {
 public:
-	Instruction(eInstructionType, IOperand*);
+	Instruction(eInstructionType, const IOperand*);
 	eInstructionType getType() const;
 	IOperand* getOperand() const;
 private:

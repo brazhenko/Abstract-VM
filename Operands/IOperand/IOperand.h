@@ -14,6 +14,7 @@ enum class eOperandType
 	Int32,
 	Float,
 	Double,
+	None,
 };
 
 class IOperand

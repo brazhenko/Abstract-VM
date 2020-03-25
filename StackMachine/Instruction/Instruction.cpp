@@ -4,10 +4,10 @@
 
 #include "Instruction.h"
 
-Instruction::Instruction(eInstructionType type, IOperand *operand)
+Instruction::Instruction(eInstructionType type, const IOperand *operand)
 {
 	type_ = type;
-	operand_ = operand;
+	operand_ = const_cast<IOperand*>(operand);
 }
 
 eInstructionType Instruction::getType() const

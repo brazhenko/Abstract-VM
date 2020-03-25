@@ -25,6 +25,8 @@ FactoryOperand::createOperand(eOperandType type, const std::string& value) const
 		return createFloat(value);
 	case eOperandType::Double:
 		return createDouble(value);
+	default:
+		return nullptr;
 	}
 }
 
@@ -57,3 +59,4 @@ const IOperand *FactoryOperand::createDouble(const std::string& value) const
 	IOperand* ptr = new ODouble(value);
 	return ptr;
 }
+

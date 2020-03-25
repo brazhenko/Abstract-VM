@@ -22,8 +22,8 @@ void StackMachine::Execute()
 	{
 		switch (op.getType())
 		{
-		case eInstructionType ::push:
-			std::cerr << "PUSH" << std::endl;
+		case eInstructionType::push:
+			std::cerr << "PUSH " << op.getOperand()->toString() << std::endl;
 			Push(op.getOperand());
 			break;
 		case eInstructionType::pop:
@@ -35,7 +35,7 @@ void StackMachine::Execute()
 			Dump();
 			break;
 		case eInstructionType::assert:
-			std::cerr << "ASSERT" << std::endl;
+			std::cerr << "ASSERT " << op.getOperand()->toString() << std::endl;
 			Assert(op.getOperand());
 			break;
 		case eInstructionType::add:
