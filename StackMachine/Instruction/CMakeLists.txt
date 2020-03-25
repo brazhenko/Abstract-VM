@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.15)
+
+
+set(AVM_SOURCES ${AVM_SOURCES}
+		${CMAKE_CURRENT_SOURCE_DIR}/Instruction.cpp
+		PARENT_SCOPE)
+
+set(AVM_HEADERS ${AVM_HEADERS}
+		${CMAKE_CURRENT_SOURCE_DIR}/Instruction.h
+		PARENT_SCOPE)
+
