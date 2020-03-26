@@ -3,6 +3,7 @@
 //
 
 #include "ODouble.h"
+#include "FactoryOperand.h"
 #include <sstream>
 
 eOperandType ODouble::getType() const
@@ -17,11 +18,24 @@ ODouble::ODouble(double val)
 
 int ODouble::getPrecision() const
 {
-	return 0;
+	return static_cast<int>(getType());
 }
 
 IOperand const *ODouble::operator+(const IOperand& rhs) const
 {
+	std::stringstream ss;
+	FactoryOperand fo;
+
+
+	if (getPrecision() == rhs.getPrecision() ||
+			getPrecision() > rhs.getPrecision())
+	{
+		return 	fo.createOperand(getType(), ss.str());
+	}
+	else
+	{
+		return 	fo.createOperand(getType(), ss.str());
+	}
 	return nullptr;
 }
 

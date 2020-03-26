@@ -1,5 +1,6 @@
 #include <iostream>
 #include <FactoryOperand.h>
+#include <Exceptions/AVMException.h>
 
 #include "StackMachine.h"
 
@@ -14,15 +15,20 @@ int main(int argc, char **av)
 			fo.createOperand(eOperandType::Int8, "10")));
 	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
 			fo.createOperand(eOperandType::Int8, "10")));
-	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::pop,
-			fo.createOperand(eOperandType::None, "")));
-	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::print,
+	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
+			fo.createOperand(eOperandType::Double, "10.12345")));
+	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::dump,
 			fo.createOperand(eOperandType::None, "")));
 	StackMachine::Instance().Execute();
 
+	try
+	{
+		throw AVM::SyntaxError(1, "ABCDEEFGFEFASLFKnmdsscds", "token23");
+	}
+	catch (AVM::SyntaxError &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
 
-
-
-	std::cout << "Hello, World!" << std::endl;
 	return 0;
 }

@@ -17,7 +17,7 @@ OInt16::OInt16(int16_t val)
 
 int OInt16::getPrecision() const
 {
-	return 0;
+	return static_cast<int>(getType());
 }
 
 IOperand const *OInt16::operator+(const IOperand& rhs) const

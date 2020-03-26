@@ -17,7 +17,7 @@ OFloat::OFloat(float val)
 
 int OFloat::getPrecision() const
 {
-	return 0;
+	return static_cast<int>(getType());
 }
 
 IOperand const *OFloat::operator+(const IOperand& rhs) const

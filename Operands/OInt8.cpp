@@ -47,7 +47,7 @@ std::string const& OInt8::toString() const
 
 int OInt8::getPrecision() const
 {
-	return -1;
+	return static_cast<int>(getType());
 }
 
 OInt8::OInt8(const std::string &raw)

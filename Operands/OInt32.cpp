@@ -17,7 +17,7 @@ OInt32::OInt32(int32_t val)
 
 int OInt32::getPrecision() const
 {
-	return 0;
+	return static_cast<int>(getType());
 }
 
 IOperand const *OInt32::operator+(const IOperand& rhs) const

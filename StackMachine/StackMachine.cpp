@@ -69,7 +69,6 @@ void StackMachine::Execute()
 		}
 	}
 	instructions_.clear();
-	throw std::
 }
 
 void StackMachine::AddInstruction(Instruction in)
@@ -89,7 +88,8 @@ void StackMachine::Pop()
 
 void StackMachine::Dump() const
 {
-
+	for (const auto &it: stack_)
+		std::cerr << it->toString() << std::endl;
 }
 
 void StackMachine::Assert(const IOperand *op)
@@ -124,8 +124,7 @@ void StackMachine::Mod()
 
 void StackMachine::Print() const
 {
-	for (const auto &it: stack_)
-		std::cerr << it->toString() << std::endl;
+
 }
 
 void StackMachine::Exit()

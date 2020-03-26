@@ -6,17 +6,22 @@
 #define AVM_FACTORYOPERAND_H
 
 #include <IOperand/IOperand.h>
+#include <vector>
+
+
 
 class FactoryOperand
 {
 public:
 	[[nodiscard]] const IOperand* createOperand(eOperandType type, const std::string& value) const;
 private:
-	[[nodiscard]] const IOperand* createInt8(const std::string& value) const;
 	[[nodiscard]] const IOperand* createInt16(const std::string& value) const;
 	[[nodiscard]] const IOperand* createInt32(const std::string& value) const;
 	[[nodiscard]] const IOperand* createFloat(const std::string& value) const;
 	[[nodiscard]] const IOperand* createDouble(const std::string& value) const;
+	[[nodiscard]] const IOperand* createInt8(const std::string& value) const;
+
+	std::vector<std::function<const IOperand* (const std::string& value)>> ctors;
 };
 
 #endif //AVM_FACTORYOPERAND_H
