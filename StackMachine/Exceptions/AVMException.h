@@ -16,11 +16,9 @@ namespace AVM
 	class LexError : public Exception
 	{
 	public:
-		LexError(int lineNum, const std::string &line);
-		const char *what() const throw();
+		LexError(int lineNum, const std::string &line, char c);
+		[[nodiscard]] const char *what() const throw() override;
 	private:
-		int lineNum_;
-		std::string line_;
 		std::string errMsg_;
 	};
 
@@ -28,45 +26,50 @@ namespace AVM
 	{
 	public:
 		SyntaxError(int lineNum, const std::string &line, const std::string& token);
-		const char *what() const throw();
+		[[nodiscard]] const char *what() const throw() override;
 	private:
-		int lineNum_;
-		std::string line_;
-		std::string token_;
 		std::string errMsg_;
 	};
 
 	class InstructionUnknown : public Exception
 	{
 	public:
-		InstructionUnknown(int lineNum, const std::string &instruction);
-		const char *what() const throw();
+		InstructionUnknown(int lineNum,
+				const std::string& line,
+				const std::string &instruction);
+		[[nodiscard]] const char *what() const throw() override;
 	private:
-		int lineNum_;
-		std::string instruction_;
 		std::string errMsg_;
 	};
 
 	class ValueOverflow : public Exception
 	{
 	public:
-		const char *what() const throw();
+		ValueOverflow(int lineNum,
+				const std::string& line,
+				const std::string& value);
+		[[nodiscard]] const char *what() const throw() override;
+	private:
+		std::string errMsg_;
 	};
 
-	class UnderflowValue : public Exception
+	class ValueUnderflow : public Exception
 	{
 	public:
-		const char *what() const throw();
+		ValueUnderflow(int lineNum,
+				const std::string& line,
+				const std::string& value);
+		[[nodiscard]] const char *what() const throw() override;
+	private:
+		std::string errMsg_;
 	};
 
 	class EmptyStack : public Exception
 	{
 	public:
 		EmptyStack(int lineNum, std::string& line);
-		const char *what() const throw();
+		[[nodiscard]] const char *what() const throw() override;
 	private:
-		int lineNum_;
-		std::string line_;
 		std::string errMsg_;
 	};
 
@@ -74,10 +77,8 @@ namespace AVM
 	{
 	public:
 		DivisionByZero(int lineNum, std::string& instruction);
-		const char *what() const throw();
+		[[nodiscard]] const char *what() const throw() override;
 	private:
-		int lineNum_;
-		std::string line_;
 		std::string errMsg_;
 	};
 
@@ -85,17 +86,18 @@ namespace AVM
 	{
 	public:
 		NoExitInstruction();
-		const char *what() const throw();
+		[[nodiscard]] const char *what() const throw() override;
+
+	private:
+		std::string errMsg_;
 	};
 
 	class AssertFailed : public Exception
 	{
 	public:
 		AssertFailed(int lineNum, std::string &line);
-		const char *what() const throw();
+		[[nodiscard]] const char *what() const throw() override;
 	private:
-		int lineNum_;
-		std::string line_;
 		std::string errMsg_;
 
 	};
@@ -104,12 +106,9 @@ namespace AVM
 	{
 	public:
 		LessThanTwoValuesForBinExp(int lineNum, std::string &line);
-		const char *what() const throw();
+		[[nodiscard]] const char *what() const throw() override;
 	private:
-		int lineNum_;
-		std::string line_;
 		std::string errMsg_;
-
 	};
 }
 

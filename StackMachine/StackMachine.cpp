@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <Exceptions/AVMException.h>
 #include "StackMachine.h"
 
 StackMachine& StackMachine::Instance()
@@ -64,11 +65,13 @@ void StackMachine::Execute()
 			break;
 		case eInstructionType::exit:
 			std::cerr << "EXIT" << std::endl;
-			Exit();
-			break;
+			return;
 		}
 	}
 	instructions_.clear();
+
+	// No exit intruction appeared in file
+	throw AVM::NoExitInstruction();
 }
 
 void StackMachine::AddInstruction(Instruction in)
