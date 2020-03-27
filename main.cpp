@@ -19,22 +19,27 @@ int main(int argc, char **av)
 			fo.createOperand(eOperandType::Double, "10.12345")));
 	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::dump,
 			fo.createOperand(eOperandType::None, "")));
-	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::exit,
-			fo.createOperand(eOperandType::None, "")));
+	// StackMachine::Instance().AddInstruction(Instruction(eInstructionType::exit,
+	//		fo.createOperand(eOperandType::None, "")));
 
 	try
 	{
 		StackMachine::Instance().Execute();
 	}
-	catch (std::exception &e)
+	catch (AVM::Exception &e)
 	{
 		std::cerr << e.what() << std::endl;
 		return EXIT_FAILURE;
 	}
+	catch (std::exception &e)
+	{
+		std::cerr << "Standard exception : " << e.what() << std::endl;
+		return EXIT_FAILURE + 1;
+	}
 	catch (...)
 	{
 		std::cerr << "Unknown exception" << std::endl;
-		return EXIT_FAILURE + 1;
+		return EXIT_FAILURE + 2;
 	}
 
 	return 0;
