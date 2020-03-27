@@ -22,6 +22,8 @@ private:
 
 	std::vector<IOperand*> stack_;
 	std::vector<Instruction> instructions_;
+	// Current operation iterator
+	std::vector<Instruction>::iterator op;
 
 	void Push(IOperand *op);
 	void Pop();
@@ -34,13 +36,10 @@ private:
 	void Mod();
 	void Print() const;
 	void Exit();
-
-	bool started = false;
 public:
 	static StackMachine& Instance();
 	void AddInstruction(Instruction);
 	void Execute();
-
 };
 
 

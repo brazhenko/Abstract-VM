@@ -67,7 +67,7 @@ namespace AVM
 	class EmptyStack : public Exception
 	{
 	public:
-		EmptyStack(int lineNum, std::string& line);
+		EmptyStack(int lineNum, const std::string& line);
 		[[nodiscard]] const char *what() const throw() override;
 	private:
 		std::string errMsg_;
@@ -111,8 +111,5 @@ namespace AVM
 		std::string errMsg_;
 	};
 }
-
-
-
 
 #endif //AVM_AVMEXCEPTION_H

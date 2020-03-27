@@ -100,7 +100,7 @@ const char *AVM::ValueUnderflow::what() const throw()
 	return errMsg_.c_str();
 }
 
-AVM::EmptyStack::EmptyStack(int lineNum, std::string& line)
+AVM::EmptyStack::EmptyStack(int lineNum, const std::string& line)
 {
 	std::stringstream ss;
 
@@ -111,6 +111,7 @@ AVM::EmptyStack::EmptyStack(int lineNum, std::string& line)
 
 	errMsg_ = ss.str();
 }
+
 
 const char *AVM::EmptyStack::what() const throw()
 {

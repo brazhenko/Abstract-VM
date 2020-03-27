@@ -19,13 +19,13 @@ StackMachine& StackMachine::operator=(StackMachine& s)
 
 void StackMachine::Execute()
 {
-	for(auto& op : instructions_)
+	for(op = instructions_.begin(); op != instructions_.end(); op++)
 	{
-		switch (op.getType())
+		switch (op->getType())
 		{
 		case eInstructionType::push:
-			std::cerr << "PUSH " << op.getOperand()->toString() << std::endl;
-			Push(op.getOperand());
+			std::cerr << "PUSH " << op->getOperand()->toString() << std::endl;
+			Push(op->getOperand());
 			break;
 		case eInstructionType::pop:
 			std::cerr << "POP" << std::endl;
@@ -36,8 +36,8 @@ void StackMachine::Execute()
 			Dump();
 			break;
 		case eInstructionType::assert:
-			std::cerr << "ASSERT " << op.getOperand()->toString() << std::endl;
-			Assert(op.getOperand());
+			std::cerr << "ASSERT " << op->getOperand()->toString() << std::endl;
+			Assert(op->getOperand());
 			break;
 		case eInstructionType::add:
 			std::cerr << "ADD" << std::endl;
@@ -69,7 +69,6 @@ void StackMachine::Execute()
 		}
 	}
 	instructions_.clear();
-
 	// No exit intruction appeared in file
 	throw AVM::NoExitInstruction();
 }
@@ -86,6 +85,10 @@ void StackMachine::Push(IOperand *op)
 
 void StackMachine::Pop()
 {
+	if (stack_.empty())
+		throw AVM::EmptyStack(op->getLineNum(),
+								op->getInstruction()
+		);
 	stack_.pop_back();
 }
 
@@ -130,7 +133,3 @@ void StackMachine::Print() const
 
 }
 
-void StackMachine::Exit()
-{
-
-}

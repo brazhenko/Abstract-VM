@@ -5,6 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(AVM_SOURCES ${AVM_SOURCES} main.cpp)
 
+set(AVM_HEADERS ${AVM_HEADERS} UnitTests/UnitTests.hpp)
+include_directories(UnitTests)
+
 add_subdirectory(Operands)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Operands ${CMAKE_CURRENT_SOURCE_DIR}/Operands/IOperand)
 
@@ -13,5 +16,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/StackMachine)
 
 add_subdirectory(StackMachine/Instruction)
 include_directories(StackMachine/Instruction)
+
+add_subdirectory(Grammar)
+include_directories(Grammar)
 
 add_executable(${PROJECT_NAME} ${AVM_SOURCES} ${AVM_HEADERS})

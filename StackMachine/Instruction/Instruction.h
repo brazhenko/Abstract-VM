@@ -25,12 +25,17 @@ enum class eInstructionType
 class Instruction
 {
 public:
-	Instruction(eInstructionType, const IOperand*);
-	eInstructionType getType() const;
-	IOperand* getOperand() const;
+	Instruction(eInstructionType type, const IOperand *operand, std::string instruction,
+			int lineNum);
+	[[nodiscard]] eInstructionType getType() const;
+	[[nodiscard]] IOperand* getOperand() const;
+	[[nodiscard]] int getLineNum() const;
+	[[nodiscard]] std::string getInstruction() const;
 private:
 	eInstructionType type_;
 	IOperand *operand_;
+	const std::string instruction_;
+	const int lineNum_;
 };
 
 #endif //AVM_INSTRUCTION_H

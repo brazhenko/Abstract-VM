@@ -9,16 +9,74 @@ int main(int argc, char **av)
 {
 	FactoryOperand fo;
 
-	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
-			fo.createOperand(eOperandType::Int8, "10")));
-	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
-			fo.createOperand(eOperandType::Int8, "42")));
-	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
-			fo.createOperand(eOperandType::Int8, "21")));
-	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
-			fo.createOperand(eOperandType::Double, "10.12345")));
-	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::dump,
-			fo.createOperand(eOperandType::None, "")));
+
+
+
+	StackMachine::Instance().AddInstruction(
+			Instruction(
+					eInstructionType::push,
+					fo.createOperand(eOperandType::Int8, "10"),
+					"push 10",
+					1)
+			);
+
+	StackMachine::Instance().AddInstruction(
+			Instruction(
+					eInstructionType::pop,
+					fo.createOperand(eOperandType::Int8, ""),
+					"pop ",
+					2)
+	);
+
+	StackMachine::Instance().AddInstruction(
+			Instruction(
+					eInstructionType::pop,
+					fo.createOperand(eOperandType::Int8, ""),
+					"pop ",
+					3)
+	);
+
+	StackMachine::Instance().AddInstruction(
+			Instruction(
+					eInstructionType::push,
+					fo.createOperand(eOperandType::Int8, "10"),
+					"push 123",
+					1)
+	);
+
+	StackMachine::Instance().AddInstruction(
+			Instruction(
+					eInstructionType::push,
+					fo.createOperand(eOperandType::Int8, "10"),
+					"push 123",
+					1)
+	);
+
+	StackMachine::Instance().AddInstruction(
+			Instruction(
+					eInstructionType::push,
+					fo.createOperand(eOperandType::Int8, "10"),
+					"push 123",
+					1)
+	);
+
+	StackMachine::Instance().AddInstruction(
+			Instruction(
+					eInstructionType::push,
+					fo.createOperand(eOperandType::Int8, "10"),
+					"push 123",
+					1)
+	);
+
+//	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
+//			fo.createOperand(eOperandType::Int8, "42"), <#initializer#>, 0));
+//	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
+//			fo.createOperand(eOperandType::Int8, "21"), <#initializer#>, 0));
+//	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
+//			fo.createOperand(eOperandType::Double, "10.12345"), <#initializer#>,
+//			0));
+//	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::dump,
+//			fo.createOperand(eOperandType::None, ""), <#initializer#>, 0));
 	// StackMachine::Instance().AddInstruction(Instruction(eInstructionType::exit,
 	//		fo.createOperand(eOperandType::None, "")));
 
