@@ -26,7 +26,7 @@ private:
 	// Current operation iterator
 	std::vector<Instruction>::iterator op;
 
-	void Push(IOperand *op);
+	void Push(const IOperand *operand);
 	void Pop();
 	void Dump() const;
 	void Assert(const IOperand *op);

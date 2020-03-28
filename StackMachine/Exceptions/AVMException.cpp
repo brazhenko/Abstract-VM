@@ -118,7 +118,7 @@ const char *AVM::EmptyStack::what() const throw()
 	return errMsg_.c_str();
 }
 
-AVM::DivisionByZero::DivisionByZero(int lineNum, std::string& instruction)
+AVM::DivisionByZero::DivisionByZero(int lineNum, const std::string& instruction)
 {
 	std::stringstream ss;
 
@@ -150,7 +150,7 @@ const char *AVM::NoExitInstruction::what() const throw()
 	return errMsg_.c_str();
 }
 
-AVM::AssertFailed::AssertFailed(int lineNum, std::string& line)
+AVM::AssertFailed::AssertFailed(int lineNum, const std::string& line)
 {
 	std::stringstream ss;
 
@@ -181,6 +181,24 @@ AVM::LessThanTwoValuesForBinExp::LessThanTwoValuesForBinExp(int lineNum,
 }
 
 const char *AVM::LessThanTwoValuesForBinExp::what() const throw()
+{
+	return errMsg_.c_str();
+}
+
+AVM::InvalidOperandsForBinExp::InvalidOperandsForBinExp(int lineNum,
+		const std::string& line)
+{
+	std::stringstream ss;
+
+	ss
+			<< "Line " << lineNum
+			<< " : " << "LessThanTwoValuesForBinExp"
+			<< " : " << line;
+
+	errMsg_ = ss.str();
+}
+
+const char *AVM::InvalidOperandsForBinExp::what() const throw()
 {
 	return errMsg_.c_str();
 }

@@ -5,57 +5,38 @@
 #include "StackMachine.h"
 
 
+# define ADD_INS(ITYPE, OTYPE, VALUE) { \
+	StackMachine::Instance().AddInstruction( \
+			Instruction( \
+			ITYPE, \
+			fo.createOperand(OTYPE, VALUE), \
+			"DEFAULT INSTRUCTION", \
+			-1) \
+	);\
+}
+
+
 int main(int argc, char **av)
 {
 	FactoryOperand fo;
 
+	ADD_INS(eInstructionType::push, eOperandType::Int8, "20000")
+	ADD_INS(eInstructionType::push, eOperandType::Int8, "20000")
+	ADD_INS(eInstructionType::add, eOperandType::None, "")
 
+	ADD_INS(eInstructionType::push, eOperandType::Int8, "30")
+	ADD_INS(eInstructionType::push, eOperandType::Int8, "20")
+	ADD_INS(eInstructionType::push, eOperandType::Int8, "12")
+	ADD_INS(eInstructionType::push, eOperandType::Int8, "10")
+	ADD_INS(eInstructionType::add, eOperandType::None, "")
 
+	ADD_INS(eInstructionType::add, eOperandType::None, "")
 
-	StackMachine::Instance().AddInstruction(
-			Instruction(
-					eInstructionType::push,
-					fo.createOperand(eOperandType::Int32, "30767"),
-					"push 244",
-					1)
-			);
+	ADD_INS(eInstructionType::add, eOperandType::None, "")
+	ADD_INS(eInstructionType::add, eOperandType::None, "")
+	ADD_INS(eInstructionType::dump, eOperandType::None, "")
 
-	StackMachine::Instance().AddInstruction(
-			Instruction(
-					eInstructionType::push,
-					fo.createOperand(eOperandType::Int8, "30767"),
-					"push 244",
-					2)
-	);
-
-	StackMachine::Instance().AddInstruction(
-			Instruction(
-					eInstructionType::add,
-					fo.createOperand(eOperandType::None, ""),
-					"add",
-					1)
-	);
-
-	StackMachine::Instance().AddInstruction(
-			Instruction(
-					eInstructionType::dump,
-					fo.createOperand(eOperandType::None, ""),
-					"dump",
-					1)
-	);
-
-
-//	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
-//			fo.createOperand(eOperandType::Int8, "42"), <#initializer#>, 0));
-//	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
-//			fo.createOperand(eOperandType::Int8, "21"), <#initializer#>, 0));
-//	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
-//			fo.createOperand(eOperandType::Double, "10.12345"), <#initializer#>,
-//			0));
-//	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::dump,
-//			fo.createOperand(eOperandType::None, ""), <#initializer#>, 0));
-	// StackMachine::Instance().AddInstruction(Instruction(eInstructionType::exit,
-	//		fo.createOperand(eOperandType::None, "")));
+	ADD_INS(eInstructionType::exit, eOperandType::None, "")
 
 	try
 	{

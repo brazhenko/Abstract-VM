@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <Exceptions/AVMException.h>
+#include <sstream>
 #include "StackMachine.h"
 
 StackMachine& StackMachine::Instance()
@@ -78,9 +79,9 @@ void StackMachine::AddInstruction(Instruction in)
 	instructions_.emplace_back(in);
 }
 
-void StackMachine::Push(IOperand *op)
+void StackMachine::Push(const IOperand *operand)
 {
-	stack_.emplace_back(op);
+	stack_.emplace_back(operand);
 }
 
 void StackMachine::Pop()
@@ -89,6 +90,7 @@ void StackMachine::Pop()
 		throw AVM::EmptyStack(op->getLineNum(),
 								op->getInstruction()
 		);
+
 	stack_.pop_back();
 }
 
@@ -100,7 +102,17 @@ void StackMachine::Dump() const
 
 void StackMachine::Assert(const IOperand *op)
 {
+	if (stack_.empty())
+		throw AVM::EmptyStack(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+				);
 
+	if (stack_.back()->toString() != op->toString())
+		throw AVM::AssertFailed(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+				);
 }
 
 void StackMachine::Add()
@@ -117,32 +129,92 @@ void StackMachine::Add()
 	stack_.pop_back();
 	auto res = *a + *b;
 	stack_.emplace_back(res);
-	std::cerr << "STACK SIZE: " << stack_.size() << " " << res->toString() << std::endl;
 }
 
 void StackMachine::Sub()
 {
+	if (stack_.size() < 2)
+		throw AVM::LessThanTwoValuesForBinExp(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+		);
 
+	auto a = stack_.back();
+	stack_.pop_back();
+	auto b = stack_.back();
+	stack_.pop_back();
+	auto res = *a - *b;
+	stack_.emplace_back(res);
 }
 
 void StackMachine::Mul()
 {
+	if (stack_.size() < 2)
+		throw AVM::LessThanTwoValuesForBinExp(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+		);
 
+	auto a = stack_.back();
+	stack_.pop_back();
+	auto b = stack_.back();
+	stack_.pop_back();
+	auto res = *a * *b;
+	stack_.emplace_back(res);
 }
 
 void StackMachine::Div()
 {
+	if (stack_.size() < 2)
+		throw AVM::LessThanTwoValuesForBinExp(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+		);
 
+	auto a = stack_.back();
+	stack_.pop_back();
+	auto b = stack_.back();
+	stack_.pop_back();
+	auto res = *a / *b;
+	stack_.emplace_back(res);
 }
 
 void StackMachine::Mod()
 {
+	if (stack_.size() < 2)
+		throw AVM::LessThanTwoValuesForBinExp(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+		);
 
+	auto a = stack_.back();
+	stack_.pop_back();
+	auto b = stack_.back();
+	stack_.pop_back();
+	auto res = *a % *b;
+	stack_.emplace_back(res);
 }
 
 void StackMachine::Print() const
 {
+	if (stack_.empty())
+		throw AVM::EmptyStack(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+		);
 
+	if (stack_.back()->getType() != eOperandType::Int8)
+		throw AVM::AssertFailed(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+		);
+
+	int asciCode;
+	std::stringstream ss(stack_.back()->toString());
+	ss >> asciCode;
+	char toPrint = static_cast<char>(asciCode);
+
+	std::cout << toPrint;
 }
 
 std::vector<Instruction>::iterator StackMachine::getCurrentOperation()

@@ -23,6 +23,21 @@ static const IOperand*		getOpDiff(const IOperand& lhs,
 		const IOperand& rhs,
 		eOperandType resOpType);
 
+template <typename T>
+static const IOperand*		getOpMul(const IOperand& lhs,
+		const IOperand& rhs,
+		eOperandType resOpType);
+
+template <typename T>
+static const IOperand*		getOpDiv(const IOperand& lhs,
+		const IOperand& rhs,
+		eOperandType resOpType);
+
+template <typename T>
+static const IOperand*		getOpMod(const IOperand& lhs,
+		const IOperand& rhs,
+		eOperandType resOpType);
+
 template <typename T, eOperandType OP>
 class Operand : public IOperand
 {
@@ -100,19 +115,70 @@ IOperand const *Operand<T, OP>::operator-(const IOperand& rhs) const
 template <typename T, eOperandType OP>
 IOperand const *Operand<T, OP>::operator*(const IOperand& rhs) const
 {
-	return nullptr;
+	eOperandType retType = getTypeMaxPrec(*this, rhs);
+
+	switch (retType)
+	{
+	case eOperandType::Int8:
+		return getOpMul<int16_t>(*this, rhs, retType);
+	case eOperandType::Int16:
+		return getOpMul<int16_t>(*this, rhs, retType);
+	case eOperandType::Int32:
+		return getOpMul<int32_t>(*this, rhs, retType);
+	case eOperandType::Float:
+		return getOpMul<float>(*this, rhs, retType);
+	case eOperandType::Double:
+		return getOpMul<double>(*this, rhs, retType);
+	default:
+		return nullptr;
+	}
 }
 
 template <typename T, eOperandType OP>
 IOperand const *Operand<T, OP>::operator/(const IOperand& rhs) const
 {
-	return nullptr;
+	eOperandType retType = getTypeMaxPrec(*this, rhs);
+
+	switch (retType)
+	{
+	case eOperandType::Int8:
+		return getOpDiv<int16_t>(*this, rhs, retType);
+	case eOperandType::Int16:
+		return getOpDiv<int16_t>(*this, rhs, retType);
+	case eOperandType::Int32:
+		return getOpDiv<int32_t>(*this, rhs, retType);
+	case eOperandType::Float:
+		return getOpDiv<float>(*this, rhs, retType);
+	case eOperandType::Double:
+		return getOpDiv<double>(*this, rhs, retType);
+	default:
+		return nullptr;
+	}
 }
 
 template <typename T, eOperandType OP>
 IOperand const *Operand<T, OP>::operator%(const IOperand& rhs) const
 {
-	return nullptr;
+	eOperandType retType = getTypeMaxPrec(*this, rhs);
+
+	if (retType == eOperandType::Double
+	|| retType == eOperandType::Float)
+		throw AVM::InvalidOperandsForBinExp(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+				);
+
+	switch (retType)
+	{
+	case eOperandType::Int8:
+		return getOpMod<int16_t>(*this, rhs, retType);
+	case eOperandType::Int16:
+		return getOpMod<int16_t>(*this, rhs, retType);
+	case eOperandType::Int32:
+		return getOpMod<int32_t>(*this, rhs, retType);
+	default:
+		return nullptr;
+	}
 }
 
 template <typename T, eOperandType OP>
@@ -182,16 +248,15 @@ static const IOperand*		getOpDiff(const IOperand& lhs,
 	T a, b;
 	ssl >> a; ssr >> b;
 
-	if ((b > 0) && (a > std::numeric_limits<T>::max() - b))
-		/* `a + b` would overflow */
+	if ((b < 0) && (a > std::numeric_limits<T>::max() + b))
+		/* `a - b` would overflow */
 		throw AVM::ValueOverflow(
 				StackMachine::Instance().getCurrentOperation()->getLineNum(),
 				StackMachine::Instance().getCurrentOperation()->getInstruction(),
 				rhs.toString()
 		);
-
-	if ((b < 0) && (a < std::numeric_limits<T>::min() - b))
-		/* `a + b` would underflow */
+	if ((b > 0) && (a < std::numeric_limits<T>::min() + b))
+		/* `a - b` would underflow */
 		throw AVM::ValueUnderflow(
 				StackMachine::Instance().getCurrentOperation()->getLineNum(),
 				StackMachine::Instance().getCurrentOperation()->getInstruction(),
@@ -200,6 +265,99 @@ static const IOperand*		getOpDiff(const IOperand& lhs,
 
 	std::stringstream res;
 	res << a - b;
+
+	return fo.createOperand(resOpType, res.str());
+}
+
+template <typename T>
+static const IOperand*		getOpMul(const IOperand& lhs,
+		const IOperand& rhs,
+		eOperandType resOpType)
+{
+	FactoryOperand fo;
+	std::stringstream ssl(lhs.toString()), ssr(rhs.toString());
+
+	T a, b;
+	ssl >> a; ssr >> b;
+
+	if (a > std::numeric_limits<T>::max() / b)
+		/* `a * b` would overflow */
+		throw AVM::ValueOverflow(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction(),
+				rhs.toString()
+		);
+	if ((a < std::numeric_limits<T>::min() / b))
+		/* `a * b` would underflow */
+		throw AVM::ValueUnderflow(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction(),
+				rhs.toString()
+		);
+
+	std::stringstream res;
+	res << a * b;
+
+	return fo.createOperand(resOpType, res.str());
+}
+
+template <typename T>
+static const IOperand*		getOpDiv(const IOperand& lhs,
+		const IOperand& rhs,
+		eOperandType resOpType)
+{
+	FactoryOperand fo;
+	std::stringstream ssl(lhs.toString()), ssr(rhs.toString());
+
+	T a, b;
+	ssl >> a; ssr >> b;
+
+	if ((b < 0) && (a > std::numeric_limits<T>::max() + b))
+		/* `a - b` would overflow */
+		throw AVM::ValueOverflow(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction(),
+				rhs.toString()
+		);
+	if ((b > 0) && (a < std::numeric_limits<T>::min() + b))
+		/* `a - b` would underflow */
+		throw AVM::ValueUnderflow(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction(),
+				rhs.toString()
+		);
+
+	if (b == 0)
+		throw AVM::DivisionByZero(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+		);
+
+	std::stringstream res;
+	res << a / b;
+
+	return fo.createOperand(resOpType, res.str());
+}
+
+template <typename T>
+static const IOperand*		getOpMod(const IOperand& lhs,
+		const IOperand& rhs,
+		eOperandType resOpType)
+{
+	FactoryOperand fo;
+	std::stringstream ssl(lhs.toString()), ssr(rhs.toString());
+
+	T a, b;
+	ssl >> a; ssr >> b;
+
+	if (b == 0)
+		throw AVM::DivisionByZero(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+				);
+
+	std::stringstream res;
+	res << a % b;
 
 	return fo.createOperand(resOpType, res.str());
 }

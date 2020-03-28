@@ -76,7 +76,7 @@ namespace AVM
 	class DivisionByZero : public Exception
 	{
 	public:
-		DivisionByZero(int lineNum, std::string& instruction);
+		DivisionByZero(int lineNum, const std::string& instruction);
 		[[nodiscard]] const char *what() const throw() override;
 	private:
 		std::string errMsg_;
@@ -95,7 +95,7 @@ namespace AVM
 	class AssertFailed : public Exception
 	{
 	public:
-		AssertFailed(int lineNum, std::string &line);
+		AssertFailed(int lineNum, const std::string &line);
 		[[nodiscard]] const char *what() const throw() override;
 	private:
 		std::string errMsg_;
@@ -106,6 +106,15 @@ namespace AVM
 	{
 	public:
 		LessThanTwoValuesForBinExp(int lineNum, const std::string& line);
+		[[nodiscard]] const char *what() const throw() override;
+	private:
+		std::string errMsg_;
+	};
+
+	class InvalidOperandsForBinExp : public Exception
+	{
+	public:
+		InvalidOperandsForBinExp(int lineNum, const std::string& line);
 		[[nodiscard]] const char *what() const throw() override;
 	private:
 		std::string errMsg_;
