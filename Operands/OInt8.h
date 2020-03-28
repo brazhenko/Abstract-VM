@@ -22,7 +22,7 @@ public:
 	[[nodiscard]] std::string const & toString() const override;
 
 private:
-	int8_t value_{};
+	int8_t value_;
 	std::string raw_;
 };
 

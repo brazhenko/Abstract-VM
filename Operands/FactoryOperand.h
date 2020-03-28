@@ -8,7 +8,7 @@
 #include <IOperand/IOperand.h>
 #include <vector>
 
-
+# define MAX(X, Y) ((X) > (Y) ? (X) : (Y))
 
 class FactoryOperand
 {

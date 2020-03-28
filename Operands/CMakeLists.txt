@@ -20,5 +20,6 @@ set(AVM_HEADERS ${AVM_HEADERS}
 		${CMAKE_CURRENT_SOURCE_DIR}/IOperand/IOperand.h
 		${CMAKE_CURRENT_SOURCE_DIR}/Operand.h
 		${CMAKE_CURRENT_SOURCE_DIR}/FactoryOperand.h
+		${CMAKE_CURRENT_SOURCE_DIR}/OperatorTemplates.hpp
 		PARENT_SCOPE)
 

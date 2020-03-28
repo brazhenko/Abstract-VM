@@ -15,58 +15,35 @@ int main(int argc, char **av)
 	StackMachine::Instance().AddInstruction(
 			Instruction(
 					eInstructionType::push,
-					fo.createOperand(eOperandType::Int8, "10"),
-					"push 10",
+					fo.createOperand(eOperandType::Int32, "30767"),
+					"push 244",
 					1)
 			);
 
 	StackMachine::Instance().AddInstruction(
 			Instruction(
-					eInstructionType::pop,
-					fo.createOperand(eOperandType::Int8, ""),
-					"pop ",
+					eInstructionType::push,
+					fo.createOperand(eOperandType::Int8, "30767"),
+					"push 244",
 					2)
 	);
 
 	StackMachine::Instance().AddInstruction(
 			Instruction(
-					eInstructionType::pop,
-					fo.createOperand(eOperandType::Int8, ""),
-					"pop ",
-					3)
-	);
-
-	StackMachine::Instance().AddInstruction(
-			Instruction(
-					eInstructionType::push,
-					fo.createOperand(eOperandType::Int8, "10"),
-					"push 123",
+					eInstructionType::add,
+					fo.createOperand(eOperandType::None, ""),
+					"add",
 					1)
 	);
 
 	StackMachine::Instance().AddInstruction(
 			Instruction(
-					eInstructionType::push,
-					fo.createOperand(eOperandType::Int8, "10"),
-					"push 123",
+					eInstructionType::dump,
+					fo.createOperand(eOperandType::None, ""),
+					"dump",
 					1)
 	);
 
-	StackMachine::Instance().AddInstruction(
-			Instruction(
-					eInstructionType::push,
-					fo.createOperand(eOperandType::Int8, "10"),
-					"push 123",
-					1)
-	);
-
-	StackMachine::Instance().AddInstruction(
-			Instruction(
-					eInstructionType::push,
-					fo.createOperand(eOperandType::Int8, "10"),
-					"push 123",
-					1)
-	);
 
 //	StackMachine::Instance().AddInstruction(Instruction(eInstructionType::push,
 //			fo.createOperand(eOperandType::Int8, "42"), <#initializer#>, 0));
@@ -99,6 +76,5 @@ int main(int argc, char **av)
 		std::cerr << "Unknown exception" << std::endl;
 		return EXIT_FAILURE + 2;
 	}
-
 	return 0;
 }

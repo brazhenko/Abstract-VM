@@ -14,7 +14,7 @@ enum class eOperandType
 	Int32,
 	Float,
 	Double,
-	None,
+	None
 };
 
 class IOperand
@@ -37,7 +37,6 @@ public:
 	[[nodiscard]] virtual std::string const & toString() const = 0;
 	// String representation of the instance
 	virtual ~IOperand() = default;
-
 };
 
 #endif //AVM_IOPERAND_H

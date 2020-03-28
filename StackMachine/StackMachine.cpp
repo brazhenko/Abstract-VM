@@ -95,7 +95,7 @@ void StackMachine::Pop()
 void StackMachine::Dump() const
 {
 	for (const auto &it: stack_)
-		std::cerr << it->toString() << std::endl;
+		std::cout << it->toString() << std::endl;
 }
 
 void StackMachine::Assert(const IOperand *op)
@@ -105,7 +105,19 @@ void StackMachine::Assert(const IOperand *op)
 
 void StackMachine::Add()
 {
+	if (stack_.size() < 2)
+		throw AVM::LessThanTwoValuesForBinExp(
+				StackMachine::Instance().getCurrentOperation()->getLineNum(),
+				StackMachine::Instance().getCurrentOperation()->getInstruction()
+				);
 
+	auto a = stack_.back();
+	stack_.pop_back();
+	auto b = stack_.back();
+	stack_.pop_back();
+	auto res = *a + *b;
+	stack_.emplace_back(res);
+	std::cerr << "STACK SIZE: " << stack_.size() << " " << res->toString() << std::endl;
 }
 
 void StackMachine::Sub()
@@ -131,5 +143,10 @@ void StackMachine::Mod()
 void StackMachine::Print() const
 {
 
+}
+
+std::vector<Instruction>::iterator StackMachine::getCurrentOperation()
+{
+	return op;
 }
 

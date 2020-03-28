@@ -20,8 +20,9 @@ private:
 
 	StackMachine& operator=(StackMachine&);
 
-	std::vector<IOperand*> stack_;
+	std::vector<const IOperand*> stack_;
 	std::vector<Instruction> instructions_;
+
 	// Current operation iterator
 	std::vector<Instruction>::iterator op;
 
@@ -35,10 +36,10 @@ private:
 	void Div();
 	void Mod();
 	void Print() const;
-	void Exit();
 public:
 	static StackMachine& Instance();
 	void AddInstruction(Instruction);
+	std::vector<Instruction>::iterator getCurrentOperation();
 	void Execute();
 };
 

@@ -168,7 +168,7 @@ const char *AVM::AssertFailed::what() const throw()
 }
 
 AVM::LessThanTwoValuesForBinExp::LessThanTwoValuesForBinExp(int lineNum,
-		std::string& line)
+		const std::string& line)
 {
 	std::stringstream ss;
 

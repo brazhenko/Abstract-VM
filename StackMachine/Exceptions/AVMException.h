@@ -105,7 +105,7 @@ namespace AVM
 	class LessThanTwoValuesForBinExp : public Exception
 	{
 	public:
-		LessThanTwoValuesForBinExp(int lineNum, std::string &line);
+		LessThanTwoValuesForBinExp(int lineNum, const std::string& line);
 		[[nodiscard]] const char *what() const throw() override;
 	private:
 		std::string errMsg_;
