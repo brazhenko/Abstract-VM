@@ -8,7 +8,19 @@
 #include "FactoryOperand.h"
 
 template <typename T>
-const IOperand*		getNewOperand(const IOperand& lhs, const IOperand& rhs)
+const IOperand*		getOpSum(const IOperand& lhs,
+		const IOperand& rhs,
+		eOperandType resOpType);
+
+template <typename T>
+const IOperand*   f(const IOperand& lhs,
+		const IOperand& rhs,
+		eOperandType t);
+
+template <typename T>
+const IOperand*		getOpSum(const IOperand& lhs,
+					const IOperand& rhs,
+					eOperandType resOpType)
 {
 	FactoryOperand fo;
 	std::stringstream ssl(lhs.toString()), ssr(rhs.toString());
@@ -35,8 +47,26 @@ const IOperand*		getNewOperand(const IOperand& lhs, const IOperand& rhs)
 	std::stringstream res;
 	res << a + b;
 
+	return fo.createOperand(resOpType, res.str());
+}
 
-	return fo.createOperand(eOperandType::Int8, res.str());
+const IOperand*   f(const IOperand& lhs,
+		const IOperand& rhs,
+		eOperandType t)
+{
+	switch (t)
+	{
+	case eOperandType::Int8:
+		return getOpSum<int16_t>(lhs, rhs, eOperandType::Int8);
+	case eOperandType::Int16:
+		return getOpSum<int16_t>(lhs, rhs, eOperandType::Int16);
+	case eOperandType::Int32:
+		return getOpSum<int32_t>(lhs, rhs, eOperandType::Int32);
+	case eOperandType::Float:
+		return getOpSum<float>(lhs, rhs, eOperandType::Float);
+	case eOperandType::Double:
+		return getOpSum<double>(lhs, rhs, eOperandType::Double);
+	}
 }
 
 # endif

@@ -12,6 +12,9 @@
 #include <cfloat>
 #include <cfenv>
 
+#include "OperatorTemplates.hpp"
+
+
 OInt8::OInt8(int8_t val)
 {
 	value_ = val;
@@ -27,143 +30,15 @@ IOperand const* OInt8::operator+(const IOperand& rhs) const
 	FactoryOperand fo;
 	std::stringstream ssl(toString()), ssr(rhs.toString());
 
-	switch (rhs.getType())
-	{
-	case eOperandType::Int8:
-	{
-		std::cerr << "eOperandType::Int8" << std::endl;
-		int16_t a, b;
-		ssl >> a; ssr >> b;
+	if (getPrecision() > rhs.getPrecision())
+		return f(*this, rhs, getType());
+	else
+		return f(*this, rhs, rhs.getType());
 
-		if ((b > 0) && (a > std::numeric_limits<int8_t>::max() - b))
-			/* `a + b` would overflow */
-			throw AVM::ValueOverflow(
-					StackMachine::Instance().getCurrentOperation()->getLineNum(),
-					StackMachine::Instance().getCurrentOperation()->getInstruction(),
-					rhs.toString()
-					);
-
-		if ((b < 0) && (a < std::numeric_limits<int8_t>::min() - b))
-			/* `a + b` would underflow */
-			throw AVM::ValueUnderflow(
-					StackMachine::Instance().getCurrentOperation()->getLineNum(),
-					StackMachine::Instance().getCurrentOperation()->getInstruction(),
-					rhs.toString()
-			);
-
-		std::stringstream res;
-		res << a + b;
-
-		return fo.createOperand(eOperandType::Int8, res.str());
-	}
-	case eOperandType::Int16:
-	{
-		std::cerr << "eOperandType::Int16" << std::endl;
-		int16_t a, b;
-		ssl >> a; ssr >> b;
-
-		if ((b > 0) && (a > std::numeric_limits<int16_t>::max() - b))
-			/* `a + b` would overflow */
-			throw AVM::ValueOverflow(
-					StackMachine::Instance().getCurrentOperation()->getLineNum(),
-					StackMachine::Instance().getCurrentOperation()->getInstruction(),
-					rhs.toString()
-			);
-
-		if ((b < 0) && (a < std::numeric_limits<int16_t>::min() - b))
-			/* `a + b` would underflow */
-			throw AVM::ValueUnderflow(
-					StackMachine::Instance().getCurrentOperation()->getLineNum(),
-					StackMachine::Instance().getCurrentOperation()->getInstruction(),
-					rhs.toString()
-			);
-
-		std::stringstream res;
-		res << a + b;
-		return fo.createOperand(eOperandType::Int16, res.str());
-	}
-	case eOperandType::Int32:
-	{
-		std::cerr << "eOperandType::Int32" << std::endl;
-		int32_t a, b;
-		ssl >> a; ssr >> b;
-
-		if ((b > 0) && (a > std::numeric_limits<int32_t>::max() - b))
-			/* `a + b` would overflow */
-			throw AVM::ValueOverflow(
-					StackMachine::Instance().getCurrentOperation()->getLineNum(),
-					StackMachine::Instance().getCurrentOperation()->getInstruction(),
-					rhs.toString()
-			);
-
-		if ((b < 0) && (a < std::numeric_limits<int32_t>::min() - b))
-			/* `a + b` would underflow */
-			throw AVM::ValueUnderflow(
-					StackMachine::Instance().getCurrentOperation()->getLineNum(),
-					StackMachine::Instance().getCurrentOperation()->getInstruction(),
-					rhs.toString()
-			);
-
-		std::stringstream res;
-		res << a + b;
-		return fo.createOperand(eOperandType::Int32, res.str());
-	}
-	case eOperandType::Float:
-	{
-		float a, b;
-		ssl >> a; ssr >> b;
-
-		if ((b > 0) && (a > std::numeric_limits<float>::max() - b))
-			/* `a + b` would overflow */
-			throw AVM::ValueOverflow(
-					StackMachine::Instance().getCurrentOperation()->getLineNum(),
-					StackMachine::Instance().getCurrentOperation()->getInstruction(),
-					rhs.toString()
-			);
-
-		if ((b < 0) && (a < std::numeric_limits<float>::min() - b))
-			/* `a + b` would underflow */
-			throw AVM::ValueUnderflow(
-					StackMachine::Instance().getCurrentOperation()->getLineNum(),
-					StackMachine::Instance().getCurrentOperation()->getInstruction(),
-					rhs.toString()
-			);
-
-		std::stringstream res;
-		res << a + b;
-		return fo.createOperand(eOperandType::Float, res.str());
-	}
-	case eOperandType::Double:
-	{
-		double a, b;
-		ssl >> a; ssr >> b;
-
-		if ((b > 0) && (a > std::numeric_limits<double >::min() - b))
-			/* `a + b` would overflow */
-			throw AVM::ValueOverflow(
-					StackMachine::Instance().getCurrentOperation()->getLineNum(),
-					StackMachine::Instance().getCurrentOperation()->getInstruction(),
-					rhs.toString()
-			);
-
-		if ((b < 0) && (a < std::numeric_limits<double>::min() - b))
-			/* `a + b` would underflow */
-			throw AVM::ValueUnderflow(
-					StackMachine::Instance().getCurrentOperation()->getLineNum(),
-					StackMachine::Instance().getCurrentOperation()->getInstruction(),
-					rhs.toString()
-			);
-
-		std::stringstream res;
-		res << a + b;
-		return fo.createOperand(eOperandType::Double, res.str());
-	}
-	case eOperandType::None:
+	NoneType
 	{
 		// TODO
 	}
-	}
-	return nullptr;
 }
 
 IOperand const *OInt8::operator-(const IOperand& rhs) const
