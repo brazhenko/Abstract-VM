@@ -2,13 +2,13 @@
 // Created by 17641238 on 25.03.2020.
 //
 
-#ifndef AVM_OPERAND_H
-#define AVM_OPERAND_H
+#ifndef AVM_OPERAND_HPP
+#define AVM_OPERAND_HPP
 
 #include <sstream>
+#include <Exceptions/AVMException.h>
+#include <StackMachine.h>
 #include "IOperand.h"
-#include "OperatorTemplates.hpp"
-
 
 static eOperandType getTypeMaxPrec(const IOperand& lhs,
 		const IOperand& rhs);

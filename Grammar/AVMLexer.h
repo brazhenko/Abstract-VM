@@ -5,7 +5,7 @@
 #ifndef AVM_AVMLEXER_H
 #define AVM_AVMLEXER_H
 
-enum Tokens
+enum class AVMTokens
 {
 	EOR,
 	COMMENT,

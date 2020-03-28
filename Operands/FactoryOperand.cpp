@@ -4,7 +4,7 @@
 
 #include <sstream>
 #include "FactoryOperand.h"
-#include "Operand.h"
+#include "Operand.hpp"
 
 const IOperand *
 FactoryOperand::createOperand(eOperandType type, const std::string& value) const
