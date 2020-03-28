@@ -4,11 +4,7 @@
 
 #include <sstream>
 #include "FactoryOperand.h"
-#include "OInt8.h"
-#include "OInt16.h"
-#include "OInt32.h"
-#include "OFloat.h"
-#include "ODouble.h"
+#include "Operand.h"
 
 const IOperand *
 FactoryOperand::createOperand(eOperandType type, const std::string& value) const
@@ -32,31 +28,31 @@ FactoryOperand::createOperand(eOperandType type, const std::string& value) const
 
 const IOperand *FactoryOperand::createInt8(const std::string& value) const
 {
-	IOperand* ptr = new OInt8(value);
+	IOperand* ptr = new Operand<int, eOperandType::Int8>(value);
 	return ptr;
 }
 
 const IOperand *FactoryOperand::createInt16(const std::string& value) const
 {
-	IOperand* ptr = new OInt16(value);
+	IOperand* ptr = new Operand<int, eOperandType::Int16>(value);
 	return ptr;
 }
 
 const IOperand *FactoryOperand::createInt32(const std::string& value) const
 {
-	IOperand* ptr = new OInt32(value);
+	IOperand* ptr = new Operand<int, eOperandType::Int32>(value);
 	return ptr;
 }
 
 const IOperand *FactoryOperand::createFloat(const std::string& value) const
 {
-	IOperand* ptr = new OFloat(value);
+	IOperand* ptr = new Operand<int, eOperandType::Float>(value);
 	return ptr;
 }
 
 const IOperand *FactoryOperand::createDouble(const std::string& value) const
 {
-	IOperand* ptr = new ODouble(value);
+	IOperand* ptr = new Operand<int, eOperandType::Double>(value);
 	return ptr;
 }
 
