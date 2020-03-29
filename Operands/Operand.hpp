@@ -362,4 +362,4 @@ static const IOperand*		getOpMod(const IOperand& lhs,
 	return fo.createOperand(resOpType, res.str());
 }
 
-#endif //AVM_OPERAND_Hч
+#endif //AVM_OPERAND_H

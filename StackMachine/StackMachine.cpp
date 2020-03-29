@@ -5,6 +5,7 @@
 #include <iostream>
 #include <Exceptions/AVMException.h>
 #include <sstream>
+#include <FactoryOperand.h>
 #include "StackMachine.h"
 
 StackMachine& StackMachine::Instance()
@@ -70,7 +71,6 @@ void StackMachine::Execute()
 		}
 	}
 	instructions_.clear();
-	// No exit intruction appeared in file
 	throw AVM::NoExitInstruction();
 }
 
@@ -100,7 +100,7 @@ void StackMachine::Dump() const
 		std::cout << it->toString() << std::endl;
 }
 
-void StackMachine::Assert(const IOperand *op)
+void StackMachine::Assert(const IOperand *operand)
 {
 	if (stack_.empty())
 		throw AVM::EmptyStack(
@@ -108,7 +108,7 @@ void StackMachine::Assert(const IOperand *op)
 				StackMachine::Instance().getCurrentOperation()->getInstruction()
 				);
 
-	if (stack_.back()->toString() != op->toString())
+	if (stack_.back()->toString() != operand->toString())
 		throw AVM::AssertFailed(
 				StackMachine::Instance().getCurrentOperation()->getLineNum(),
 				StackMachine::Instance().getCurrentOperation()->getInstruction()
@@ -220,5 +220,28 @@ void StackMachine::Print() const
 std::vector<Instruction>::iterator StackMachine::getCurrentOperation()
 {
 	return op;
+}
+
+void StackMachine::parseInstructionsFromStream(std::istream &is)
+{
+	std::string line;
+	int lineNum = 0;
+	FactoryOperand fo;
+
+	while (getline(is, line))
+	{
+		// Some parsing actions
+
+		AddInstruction(
+			Instruction(
+			eInstructionType::push,
+			fo.createOperand(eOperandType::Int8, "100"),
+			line,
+			lineNum
+			)
+		);
+
+		lineNum++;
+	}
 }
 

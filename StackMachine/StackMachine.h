@@ -40,6 +40,7 @@ public:
 	static StackMachine& Instance();
 	void AddInstruction(Instruction);
 	std::vector<Instruction>::iterator getCurrentOperation();
+	void parseInstructionsFromStream(std::istream &is);
 	void Execute();
 };
 

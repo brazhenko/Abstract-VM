@@ -202,3 +202,33 @@ const char *AVM::InvalidOperandsForBinExp::what() const throw()
 {
 	return errMsg_.c_str();
 }
+
+AVM::OptionRequiresAnArguement::OptionRequiresAnArguement(char c)
+{
+	std::stringstream ss;
+
+	ss << "Option -" << c << " requires an argument.";
+	errMsg_ = ss.str();
+}
+
+const char *AVM::OptionRequiresAnArguement::what() const throw()
+{
+	return errMsg_.c_str();
+}
+
+AVM::UnknownOption::UnknownOption(int c)
+{
+	std::stringstream ss;
+
+	if (std::isprint(c))
+		ss << "Unknown option - " << (char)c;
+	else
+		ss << "Unknown option - " << std::hex << c;
+
+	errMsg_ = ss.str();
+}
+
+const char *AVM::UnknownOption::what() const throw()
+{
+	return errMsg_.c_str();
+}

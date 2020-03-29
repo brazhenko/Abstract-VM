@@ -5,6 +5,8 @@
 #ifndef AVM_AVMLEXER_H
 #define AVM_AVMLEXER_H
 
+# define AVM_EOF_INTERACTIVE ";;"
+
 enum class AVMTokens
 {
 	EOR,

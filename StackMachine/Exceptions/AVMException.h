@@ -119,6 +119,27 @@ namespace AVM
 	private:
 		std::string errMsg_;
 	};
+
+	class OptionRequiresAnArguement : public Exception
+	{
+	public:
+		explicit OptionRequiresAnArguement(char c);
+		[[nodiscard]] const char *what() const throw() override;
+	private:
+		std::string errMsg_;
+	};
+
+	class UnknownOption : public Exception
+	{
+	public:
+		explicit UnknownOption(int c);
+		[[nodiscard]] const char *what() const throw() override;
+	private:
+		std::string errMsg_;
+	};
+
+	class NeedHelp : public Exception
+	{};
 }
 
 #endif //AVM_AVMEXCEPTION_H

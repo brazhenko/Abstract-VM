@@ -3,9 +3,9 @@ project(AVM)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(AVM_SOURCES ${AVM_SOURCES} main.cpp)
+set(AVM_SOURCES ${AVM_SOURCES} main.cpp Service/ParseContext.cpp Service/ExecuteFile.cpp)
 
-set(AVM_HEADERS ${AVM_HEADERS} UnitTests/UnitTests.hpp)
+set(AVM_HEADERS ${AVM_HEADERS} UnitTests/UnitTests.hpp Service/AVM.h)
 include_directories(UnitTests)
 
 add_subdirectory(Operands)
