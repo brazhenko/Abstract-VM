@@ -5,6 +5,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 
 set(AVM_SOURCES ${AVM_SOURCES}
+		${CMAKE_CURRENT_SOURCE_DIR}/AVMLexer.ll.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/AVMParser.yy.cpp
 		PARENT_SCOPE)
 
 

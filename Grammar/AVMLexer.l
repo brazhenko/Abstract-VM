@@ -4,12 +4,12 @@
 
 %%
 
-;;						return AVMTokens::EOR;
-;.+						return AVMTokens::COMMENT;
-[-]?[0..9]+ 			return AVMTokens::INTEGER;
-[-]?[0..9]+.[0..9]+		return AVMTokens::FLOATING;
-'\n'+ 					return AVMTokens::SEPARATOR;
-.						return AVMTokens::UNKNOWN;
+;;						AVM_EOR;
+;.+						AVM_COMMENT;
+[-]?[0..9]+ 			AVM_INTEGER;
+[-]?[0..9]+.[0..9]+		AVM_FLOATING;
+'\n'+ 					AVM_SEPARATOR;
+.						AVM_UNKNOWN;
 
 %%
 
