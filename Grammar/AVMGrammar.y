@@ -7,11 +7,14 @@
 #include <iostream>
 #include "IOperand.h"
 #include "Instruction.h"
+#include "Exceptions/AVMException.h"
+
 extern int yylex();
 
 
 void yyerror(const char *msg)
 {
+	throw AVM::SyntaxError(-1, "LINE", "TOKEN");
 }
 
 struct yaccValue
@@ -20,17 +23,9 @@ struct yaccValue
 	eOperandType valueType;
 };
 
-struct yaccInstruction
-{
-	struct yaccValue *val;
-	eInstructionType instrType;
-};
-
-std::vector<struct yaccInstruction*> query;
-
 %}
 
-%token N Z SEP
+%token N Z SEP COMMENT
 %token AVM_POP
 %token AVM_PUSH
 %token AVM_DUMP
@@ -59,12 +54,22 @@ std::vector<struct yaccInstruction*> query;
 %%
 
 S :
-	INSTR
-	{
-		std::cerr << "Query found" << std::endl;
-	}
-	| INSTR S 	{printf("ok01\n\n");}
-	| INSTR SEP	{printf("ok02\n\n");}
+	INSTRUCTIONS
+	;
+
+INSTRUCTIONS :
+	| INSTR
+	| INSTR SEPSEQ INSTRUCTIONS
+	;
+
+SEPSEQ:
+	SEPARATOR
+	| SEPARATOR SEPSEQ
+	;
+
+SEPARATOR:
+	SEP
+	| COMMENT
 	;
 
 INSTR :

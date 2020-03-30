@@ -1,5 +1,4 @@
 #include <iostream>
-#include <FactoryOperand.h>
 #include <Exceptions/AVMException.h>
 #include "Service/AVM.h"
 #include "StackMachine.h"
@@ -9,9 +8,8 @@ int yyparse();
 
 int main(int argc, char **argv)
 {
-	yyparse();
 
-#if 0
+//#if 0
 	AVM::Context context;
 	try {
 		context = parseAVMArgv(argc, argv);
@@ -45,11 +43,12 @@ int main(int argc, char **argv)
 			std::cerr << e.what() << std::endl;
 		}
 		catch (...) {
-
+			std::cerr << "Unknown exception" << std::endl;
 		}
 	}
 	return 0;
-#endif
+// #endif
+
 
 	try {
 		StackMachine::Instance().Execute();

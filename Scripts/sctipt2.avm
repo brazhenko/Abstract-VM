@@ -1,0 +1,23 @@
+push  float (2.2)
+push int8 (2)
+push int8 (2)
+push int8 (2)
+push int8 (2)
+
+;Commment
+
+
+
+mul
+mul
+mul
+mul
+assert  float(35.1)
+dump
+
+
+
+dump
+dump
+
+exit

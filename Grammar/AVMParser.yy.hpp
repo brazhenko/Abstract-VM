@@ -42,62 +42,64 @@
      N = 258,
      Z = 259,
      SEP = 260,
-     AVM_POP = 261,
-     AVM_PUSH = 262,
-     AVM_DUMP = 263,
-     AVM_ASSERT = 264,
-     AVM_ADD = 265,
-     AVM_SUB = 266,
-     AVM_MUL = 267,
-     AVM_DIV = 268,
-     AVM_MOD = 269,
-     AVM_PRINT = 270,
-     AVM_EXIT = 271,
-     AVM_INT8_TYPE = 272,
-     AVM_INT16_TYPE = 273,
-     AVM_INT32_TYPE = 274,
-     AVM_FLOAT_TYPE = 275,
-     AVM_DOUBLE_TYPE = 276,
-     AVM_OPEN_BR = 277,
-     AVM_CLOSE_BR = 278
+     COMMENT = 261,
+     AVM_POP = 262,
+     AVM_PUSH = 263,
+     AVM_DUMP = 264,
+     AVM_ASSERT = 265,
+     AVM_ADD = 266,
+     AVM_SUB = 267,
+     AVM_MUL = 268,
+     AVM_DIV = 269,
+     AVM_MOD = 270,
+     AVM_PRINT = 271,
+     AVM_EXIT = 272,
+     AVM_INT8_TYPE = 273,
+     AVM_INT16_TYPE = 274,
+     AVM_INT32_TYPE = 275,
+     AVM_FLOAT_TYPE = 276,
+     AVM_DOUBLE_TYPE = 277,
+     AVM_OPEN_BR = 278,
+     AVM_CLOSE_BR = 279
    };
 #endif
 /* Tokens.  */
 #define N 258
 #define Z 259
 #define SEP 260
-#define AVM_POP 261
-#define AVM_PUSH 262
-#define AVM_DUMP 263
-#define AVM_ASSERT 264
-#define AVM_ADD 265
-#define AVM_SUB 266
-#define AVM_MUL 267
-#define AVM_DIV 268
-#define AVM_MOD 269
-#define AVM_PRINT 270
-#define AVM_EXIT 271
-#define AVM_INT8_TYPE 272
-#define AVM_INT16_TYPE 273
-#define AVM_INT32_TYPE 274
-#define AVM_FLOAT_TYPE 275
-#define AVM_DOUBLE_TYPE 276
-#define AVM_OPEN_BR 277
-#define AVM_CLOSE_BR 278
+#define COMMENT 261
+#define AVM_POP 262
+#define AVM_PUSH 263
+#define AVM_DUMP 264
+#define AVM_ASSERT 265
+#define AVM_ADD 266
+#define AVM_SUB 267
+#define AVM_MUL 268
+#define AVM_DIV 269
+#define AVM_MOD 270
+#define AVM_PRINT 271
+#define AVM_EXIT 272
+#define AVM_INT8_TYPE 273
+#define AVM_INT16_TYPE 274
+#define AVM_INT32_TYPE 275
+#define AVM_FLOAT_TYPE 276
+#define AVM_DOUBLE_TYPE 277
+#define AVM_OPEN_BR 278
+#define AVM_CLOSE_BR 279
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 46 "AVMGrammar.y"
+#line 41 "AVMGrammar.y"
 {
 	char *string;
 	struct yaccValue *val;
 	struct yaccInstruction *inst;
 }
 /* Line 1529 of yacc.c.  */
-#line 101 "AVMParser.yy.hpp"
+#line 103 "AVMParser.yy.hpp"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

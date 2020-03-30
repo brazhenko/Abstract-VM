@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include "AVMLexer.h"
+#include "StackMachine.h"
 
 void ExecuteInteractive()
 {
@@ -17,16 +18,21 @@ void ExecuteInteractive()
 	}
 }
 
+int yyparse();
 void ExecuteFile(const std::string& fileName)
 {
 	std::ifstream fs(fileName);
 	std::string line;
 
-	if (!fs.is_open() || !fs)
+	extern FILE * yyin;
+	FILE *f = fopen(fileName.c_str(), "r");
+
+
+	if (!f)
 		throw std::runtime_error("Error on opening file : " + fileName);
 
-	for (int lineNum = 1; getline(fs, line); lineNum++)
-	{
-		std::cout << lineNum << ": " << line << std::endl;
-	}
+	yyin = f;
+	yyparse();
+	fclose(f);
+	StackMachine::Instance().Execute();
 }
