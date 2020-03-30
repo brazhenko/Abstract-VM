@@ -1,4 +1,10 @@
-all:
+
+
+all: Scanner Parser
+
+Scanner: AVMLexer.l
 	lex -o AVMLexer.ll.cpp AVMLexer.l
 	sed -i "" -- 's/register//g' AVMLexer.ll.cpp
-	yacc -o AVMParser.yy.cpp AVMGrammar.y
+
+Parser: AVMGrammar.y
+	yacc -d -o AVMParser.yy.cpp AVMGrammar.y

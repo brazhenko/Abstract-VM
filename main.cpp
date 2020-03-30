@@ -15,12 +15,15 @@
 	);\
 }
 
-#define AVM_OPTIONS "ho"
-
-
+int yyparse();
 
 int main(int argc, char **argv)
 {
+	yyparse();
+
+
+	return 0;
+
 	AVM::Context context;
 
 	try {
