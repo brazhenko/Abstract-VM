@@ -26,47 +26,36 @@ void StackMachine::Execute()
 		switch (op->getType())
 		{
 		case eInstructionType::push:
-			std::cerr << "PUSH " << op->getOperand()->toString() << std::endl;
 			Push(op->getOperand());
 			break;
 		case eInstructionType::pop:
-			std::cerr << "POP" << std::endl;
 			Pop();
 			break;
 		case eInstructionType::dump:
-			std::cerr << "DUMP" << std::endl;
 			Dump();
 			break;
 		case eInstructionType::assert:
-			std::cerr << "ASSERT " << op->getOperand()->toString() << std::endl;
 			Assert(op->getOperand());
 			break;
 		case eInstructionType::add:
-			std::cerr << "ADD" << std::endl;
 			Add();
 			break;
 		case eInstructionType::sub:
-			std::cerr << "SUB" << std::endl;
 			Sub();
 			break;
 		case eInstructionType::mul:
-			std::cerr << "MUL" << std::endl;
 			Mul();
 			break;
 		case eInstructionType::div:
-			std::cerr << "DIV" << std::endl;
 			Div();
 			break;
 		case eInstructionType::mod:
-			std::cerr << "MOD" << std::endl;
 			Mod();
 			break;
 		case eInstructionType::print:
-			std::cerr << "PRINT" << std::endl;
 			Print();
 			break;
 		case eInstructionType::exit:
-			std::cerr << "EXIT" << std::endl;
 			return;
 		}
 	}
@@ -222,26 +211,4 @@ std::vector<Instruction>::iterator StackMachine::getCurrentOperation()
 	return op;
 }
 
-void StackMachine::parseInstructionsFromStream(std::istream &is)
-{
-	std::string line;
-	int lineNum = 0;
-	FactoryOperand fo;
-
-	while (getline(is, line))
-	{
-		// Some parsing actions
-
-		AddInstruction(
-			Instruction(
-			eInstructionType::push,
-			fo.createOperand(eOperandType::Int8, "100"),
-			line,
-			lineNum
-			)
-		);
-
-		lineNum++;
-	}
-}
 

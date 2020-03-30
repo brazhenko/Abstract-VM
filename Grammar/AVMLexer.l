@@ -2,8 +2,11 @@
 #include "AVMLexer.h"
 #include "AVMParser.yy.hpp"
 #include "Exceptions/AVMException.h"
+int currentLineNum = 1;
+std::string currentLine;
 
 %}
+%option yylineno
 
 %%
 
@@ -29,7 +32,9 @@
 ")"						{return AVM_CLOSE_BR;}
 
 ;;						{return AVM_EOR;}
-;[^\n]+[\n]				{return COMMENT;}
+;[^\n]+[\n]				{
+						return COMMENT;
+						}
 [-]?[0-9]+ 				{
 						yylval.string = strdup(yytext);
 						return N;
@@ -38,9 +43,11 @@
 						yylval.string = strdup(yytext);
 						return Z;
 						}
-[\n]					{return SEP;}
+[\n]					{
+						return SEP;
+						}
 [\t\v\r\f ]+			{;}
-.						{throw AVM::LexError(-1, "DEFAULT LINE", '?');}
+.						{throw AVM::LexError(currentLineNum, "DEFAULT LINE", '?');}
 
 %%
 

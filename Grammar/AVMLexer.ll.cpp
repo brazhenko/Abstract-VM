@@ -167,7 +167,20 @@ extern FILE *yyin, *yyout;
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
 
-    #define YY_LESS_LINENO(n)
+    /* Note: We specifically omit the test for yy_rule_can_match_eol because it requires
+     *       access to the local variable yy_act. Since yyless() is a macro, it would break
+     *       existing scanners that call yyless() from OUTSIDE yylex. 
+     *       One obvious solution it to make yy_act a global. I tried that, and saw
+     *       a 5% performance hit in a non-yylineno scanner, because yy_act is
+     *       normally declared as a  variable-- so it is not worth it.
+     */
+    #define  YY_LESS_LINENO(n) \
+            do { \
+                yy_size_t yyl;\
+                for ( yyl = n; yyl < yyleng; ++yyl )\
+                    if ( yytext[yyl] == '\n' )\
+                        --yylineno;\
+            }while(0)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -482,6 +495,12 @@ static yyconst flex_int16_t yy_chk[124] =
        73,   73,   73
     } ;
 
+/* Table of booleans, true if rule could match eol. */
+static yyconst flex_int32_t yy_rule_can_match_eol[27] =
+    {   0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    1, 0, 0, 1, 0, 0, 0,     };
+
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
 
@@ -501,8 +520,10 @@ char *yytext;
 #include "AVMLexer.h"
 #include "AVMParser.yy.hpp"
 #include "Exceptions/AVMException.h"
+int currentLineNum = 1;
+std::string currentLine;
 
-#line 506 "AVMLexer.ll.cpp"
+#line 527 "AVMLexer.ll.cpp"
 
 #define INITIAL 0
 
@@ -684,10 +705,10 @@ YY_DECL
 	 char *yy_cp, *yy_bp;
 	 int yy_act;
     
-#line 8 "AVMLexer.l"
+#line 11 "AVMLexer.l"
 
 
-#line 691 "AVMLexer.ll.cpp"
+#line 712 "AVMLexer.ll.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -759,6 +780,16 @@ yy_find_action:
 
 		YY_DO_BEFORE_ACTION;
 
+		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
+			{
+			yy_size_t yyl;
+			for ( yyl = 0; yyl < yyleng; ++yyl )
+				if ( yytext[yyl] == '\n' )
+					   
+    yylineno++;
+;
+			}
+
 do_action:	/* This label is used only to access EOF actions. */
 
 		switch ( yy_act )
@@ -772,108 +803,110 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "AVMLexer.l"
+#line 13 "AVMLexer.l"
 {return AVM_PUSH;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 11 "AVMLexer.l"
+#line 14 "AVMLexer.l"
 {return AVM_POP;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 12 "AVMLexer.l"
+#line 15 "AVMLexer.l"
 {return AVM_DUMP;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 13 "AVMLexer.l"
+#line 16 "AVMLexer.l"
 {return AVM_ASSERT;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 14 "AVMLexer.l"
+#line 17 "AVMLexer.l"
 {return AVM_ADD;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 15 "AVMLexer.l"
+#line 18 "AVMLexer.l"
 {return AVM_SUB;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 16 "AVMLexer.l"
+#line 19 "AVMLexer.l"
 {return AVM_MUL;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 17 "AVMLexer.l"
+#line 20 "AVMLexer.l"
 {return AVM_DIV;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 18 "AVMLexer.l"
+#line 21 "AVMLexer.l"
 {return AVM_MOD;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 19 "AVMLexer.l"
+#line 22 "AVMLexer.l"
 {return AVM_PRINT;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 20 "AVMLexer.l"
+#line 23 "AVMLexer.l"
 {return AVM_EXIT;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 22 "AVMLexer.l"
+#line 25 "AVMLexer.l"
 {return AVM_INT8_TYPE;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 23 "AVMLexer.l"
+#line 26 "AVMLexer.l"
 {return AVM_INT16_TYPE;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 24 "AVMLexer.l"
+#line 27 "AVMLexer.l"
 {return AVM_INT32_TYPE;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 25 "AVMLexer.l"
+#line 28 "AVMLexer.l"
 {return AVM_FLOAT_TYPE;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 26 "AVMLexer.l"
+#line 29 "AVMLexer.l"
 {return AVM_DOUBLE_TYPE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 28 "AVMLexer.l"
+#line 31 "AVMLexer.l"
 {return AVM_OPEN_BR;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 29 "AVMLexer.l"
+#line 32 "AVMLexer.l"
 {return AVM_CLOSE_BR;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 31 "AVMLexer.l"
+#line 34 "AVMLexer.l"
 {return AVM_EOR;}
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 32 "AVMLexer.l"
-{return COMMENT;}
+#line 35 "AVMLexer.l"
+{
+						return COMMENT;
+						}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 33 "AVMLexer.l"
+#line 38 "AVMLexer.l"
 {
 						yylval.string = strdup(yytext);
 						return N;
@@ -881,7 +914,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 37 "AVMLexer.l"
+#line 42 "AVMLexer.l"
 {
 						yylval.string = strdup(yytext);
 						return Z;
@@ -890,25 +923,27 @@ YY_RULE_SETUP
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 41 "AVMLexer.l"
-{return SEP;}
+#line 46 "AVMLexer.l"
+{
+						return SEP;
+						}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 42 "AVMLexer.l"
+#line 49 "AVMLexer.l"
 {;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 43 "AVMLexer.l"
-{throw AVM::LexError(-1, "DEFAULT LINE", '?');}
+#line 50 "AVMLexer.l"
+{throw AVM::LexError(currentLineNum, "DEFAULT LINE", '?');}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 45 "AVMLexer.l"
+#line 52 "AVMLexer.l"
 ECHO;
 	YY_BREAK
-#line 912 "AVMLexer.ll.cpp"
+#line 947 "AVMLexer.ll.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1269,6 +1304,10 @@ static int yy_get_next_buffer (void)
 
 	*--yy_cp = (char) c;
 
+    if ( c == '\n' ){
+        --yylineno;
+    }
+
 	(yytext_ptr) = yy_bp;
 	(yy_hold_char) = *yy_cp;
 	(yy_c_buf_p) = yy_cp;
@@ -1343,6 +1382,11 @@ static int yy_get_next_buffer (void)
 	c = *(unsigned char *) (yy_c_buf_p);	/* cast for 8-bit char's */
 	*(yy_c_buf_p) = '\0';	/* preserve yytext */
 	(yy_hold_char) = *++(yy_c_buf_p);
+
+	if ( c == '\n' )
+		   
+    yylineno++;
+;
 
 	return c;
 }
@@ -1813,6 +1857,9 @@ static int yy_init_globals (void)
      * This function is called from yylex_destroy(), so don't allocate here.
      */
 
+    /* We do not touch yylineno unless the option is enabled. */
+    yylineno =  1;
+    
     (yy_buffer_stack) = 0;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
@@ -1905,7 +1952,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 45 "AVMLexer.l"
+#line 52 "AVMLexer.l"
 
 
 

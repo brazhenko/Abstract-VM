@@ -11,6 +11,11 @@
 #include "IOperand.h"
 #include "Instruction.h"
 
+/*
+ * Singletone class for Abstract-VM stack.
+ * StackMachine::Instance() returns the only class instance.
+ */
+
 class StackMachine
 {
 private:
@@ -40,11 +45,10 @@ public:
 	static StackMachine& Instance();
 	void AddInstruction(Instruction);
 	std::vector<Instruction>::iterator getCurrentOperation();
-	void parseInstructionsFromStream(std::istream &is);
 	void Execute();
 };
 
-# define ADD_INS(ITYPE, OTYPE, VALUE) \
+# define ADD_INS(ITYPE, OTYPE, VALUE, LINENUM) \
 	do { \
 	FactoryOperand fo;\
 	StackMachine::Instance().AddInstruction( \
@@ -52,7 +56,7 @@ public:
 			ITYPE, \
 			fo.createOperand(OTYPE, VALUE), \
 			"DEFAULT INSTRUCTION", \
-			-1) \
+			LINENUM) \
 	); \
 	} while (0);
 

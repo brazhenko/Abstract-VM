@@ -21,6 +21,7 @@ namespace AVM
 
 AVM::Context parseAVMArgv(int argc, char **argv);
 void ExecuteFile(const std::string& fileName);
-
+void ExecuteInteractive();
+std::string getUsage();
 
 #endif //AVM_AVM_H

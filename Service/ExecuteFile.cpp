@@ -5,29 +5,27 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include "AVMLexer.h"
 #include "StackMachine.h"
+
+int yyparse();
+extern FILE * yyin;
 
 void ExecuteInteractive()
 {
 	std::string line;
 
-	while (line != AVM_EOF_INTERACTIVE)
-	{
-		getline(std::cin, line);
-	}
+	yyin = stdin;
+	yyparse();
+	StackMachine::Instance().Execute();
 }
 
-int yyparse();
 void ExecuteFile(const std::string& fileName)
 {
 	std::ifstream fs(fileName);
 	std::string line;
 
-	extern FILE * yyin;
+
 	FILE *f = fopen(fileName.c_str(), "r");
-
-
 	if (!f)
 		throw std::runtime_error("Error on opening file : " + fileName);
 
@@ -36,3 +34,4 @@ void ExecuteFile(const std::string& fileName)
 	fclose(f);
 	StackMachine::Instance().Execute();
 }
+

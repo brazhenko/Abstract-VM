@@ -13,27 +13,27 @@
 static eOperandType getTypeMaxPrec(const IOperand& lhs,
 		const IOperand& rhs);
 
-template <typename T>
+template <typename T, typename Lim>
 static const IOperand*		getOpSum(const IOperand& lhs,
 		const IOperand& rhs,
 		eOperandType resOpType);
 
-template <typename T>
+template <typename T, typename Lim>
 static const IOperand*		getOpDiff(const IOperand& lhs,
 		const IOperand& rhs,
 		eOperandType resOpType);
 
-template <typename T>
+template <typename T, typename Lim>
 static const IOperand*		getOpMul(const IOperand& lhs,
 		const IOperand& rhs,
 		eOperandType resOpType);
 
-template <typename T>
+template <typename T, typename Lim>
 static const IOperand*		getOpDiv(const IOperand& lhs,
 		const IOperand& rhs,
 		eOperandType resOpType);
 
-template <typename T>
+template <typename T, typename Lim>
 static const IOperand*		getOpMod(const IOperand& lhs,
 		const IOperand& rhs,
 		eOperandType resOpType);
@@ -76,15 +76,15 @@ IOperand const *Operand<T, OP>::operator+(const IOperand& rhs) const
 	switch (retType)
 	{
 	case eOperandType::Int8:
-		return getOpSum<int16_t>(*this, rhs, retType);
+		return getOpSum<int16_t, int8_t>(*this, rhs, retType);
 	case eOperandType::Int16:
-		return getOpSum<int16_t>(*this, rhs, retType);
+		return getOpSum<int16_t, int16_t>(*this, rhs, retType);
 	case eOperandType::Int32:
-		return getOpSum<int32_t>(*this, rhs, retType);
+		return getOpSum<int32_t, int32_t>(*this, rhs, retType);
 	case eOperandType::Float:
-		return getOpSum<float>(*this, rhs, retType);
+		return getOpSum<float, float>(*this, rhs, retType);
 	case eOperandType::Double:
-		return getOpSum<double>(*this, rhs, retType);
+		return getOpSum<double, double >(*this, rhs, retType);
 	default:
 		return nullptr;
 	}
@@ -98,15 +98,15 @@ IOperand const *Operand<T, OP>::operator-(const IOperand& rhs) const
 	switch (retType)
 	{
 	case eOperandType::Int8:
-		return getOpDiff<int16_t>(*this, rhs, retType);
+		return getOpDiff<int16_t, int8_t>(*this, rhs, retType);
 	case eOperandType::Int16:
-		return getOpDiff<int16_t>(*this, rhs, retType);
+		return getOpDiff<int16_t, int16_t>(*this, rhs, retType);
 	case eOperandType::Int32:
-		return getOpDiff<int32_t>(*this, rhs, retType);
+		return getOpDiff<int32_t, int32_t>(*this, rhs, retType);
 	case eOperandType::Float:
-		return getOpDiff<float>(*this, rhs, retType);
+		return getOpDiff<float, float>(*this, rhs, retType);
 	case eOperandType::Double:
-		return getOpDiff<double>(*this, rhs, retType);
+		return getOpDiff<double, double >(*this, rhs, retType);
 	default:
 		return nullptr;
 	}
@@ -120,15 +120,15 @@ IOperand const *Operand<T, OP>::operator*(const IOperand& rhs) const
 	switch (retType)
 	{
 	case eOperandType::Int8:
-		return getOpMul<int16_t>(*this, rhs, retType);
+		return getOpMul<int16_t, int8_t>(*this, rhs, retType);
 	case eOperandType::Int16:
-		return getOpMul<int16_t>(*this, rhs, retType);
+		return getOpMul<int16_t, int16_t>(*this, rhs, retType);
 	case eOperandType::Int32:
-		return getOpMul<int32_t>(*this, rhs, retType);
+		return getOpMul<int32_t, int32_t>(*this, rhs, retType);
 	case eOperandType::Float:
-		return getOpMul<float>(*this, rhs, retType);
+		return getOpMul<float, float>(*this, rhs, retType);
 	case eOperandType::Double:
-		return getOpMul<double>(*this, rhs, retType);
+		return getOpMul<double, double>(*this, rhs, retType);
 	default:
 		return nullptr;
 	}
@@ -142,15 +142,15 @@ IOperand const *Operand<T, OP>::operator/(const IOperand& rhs) const
 	switch (retType)
 	{
 	case eOperandType::Int8:
-		return getOpDiv<int16_t>(*this, rhs, retType);
+		return getOpDiv<int16_t, int8_t>(*this, rhs, retType);
 	case eOperandType::Int16:
-		return getOpDiv<int16_t>(*this, rhs, retType);
+		return getOpDiv<int16_t, int16_t>(*this, rhs, retType);
 	case eOperandType::Int32:
-		return getOpDiv<int32_t>(*this, rhs, retType);
+		return getOpDiv<int32_t, int32_t>(*this, rhs, retType);
 	case eOperandType::Float:
-		return getOpDiv<float>(*this, rhs, retType);
+		return getOpDiv<float, float>(*this, rhs, retType);
 	case eOperandType::Double:
-		return getOpDiv<double>(*this, rhs, retType);
+		return getOpDiv<double, double>(*this, rhs, retType);
 	default:
 		return nullptr;
 	}
@@ -171,11 +171,11 @@ IOperand const *Operand<T, OP>::operator%(const IOperand& rhs) const
 	switch (retType)
 	{
 	case eOperandType::Int8:
-		return getOpMod<int16_t>(*this, rhs, retType);
+		return getOpMod<int16_t, int8_t>(*this, rhs, retType);
 	case eOperandType::Int16:
-		return getOpMod<int16_t>(*this, rhs, retType);
+		return getOpMod<int16_t, int16_t>(*this, rhs, retType);
 	case eOperandType::Int32:
-		return getOpMod<int32_t>(*this, rhs, retType);
+		return getOpMod<int32_t, int32_t>(*this, rhs, retType);
 	default:
 		return nullptr;
 	}
@@ -195,7 +195,7 @@ int Operand<T, OP>::getPrecision() const
 
 //------------------------------------------------------------------------------
 
-template <typename T>
+template <typename T, typename Lim>
 static const IOperand*		getOpSum(const IOperand& lhs,
 		const IOperand& rhs,
 		eOperandType resOpType)
@@ -206,7 +206,7 @@ static const IOperand*		getOpSum(const IOperand& lhs,
 	T a, b;
 	ssl >> a; ssr >> b;
 
-	if ((b > 0) && (a > std::numeric_limits<T>::max() - b))
+	if ((b > 0) && (a > std::numeric_limits<Lim>::max() - b))
 		/* `a + b` would overflow */
 		throw AVM::ValueOverflow(
 				StackMachine::Instance().getCurrentOperation()->getLineNum(),
@@ -214,7 +214,7 @@ static const IOperand*		getOpSum(const IOperand& lhs,
 				rhs.toString()
 		);
 
-	if ((b < 0) && (a < std::numeric_limits<T>::min() - b))
+	if ((b < 0) && (a < std::numeric_limits<Lim>::min() - b))
 		/* `a + b` would underflow */
 		throw AVM::ValueUnderflow(
 				StackMachine::Instance().getCurrentOperation()->getLineNum(),
@@ -237,7 +237,7 @@ static eOperandType getTypeMaxPrec(const IOperand& lhs,
 	return rhs.getType();
 }
 
-template <typename T>
+template <typename T, typename Lim>
 static const IOperand*		getOpDiff(const IOperand& lhs,
 		const IOperand& rhs,
 		eOperandType resOpType)
@@ -248,14 +248,14 @@ static const IOperand*		getOpDiff(const IOperand& lhs,
 	T a, b;
 	ssl >> a; ssr >> b;
 
-	if ((b < 0) && (a > std::numeric_limits<T>::max() + b))
+	if ((b < 0) && (a > std::numeric_limits<Lim>::max() + b))
 		/* `a - b` would overflow */
 		throw AVM::ValueOverflow(
 				StackMachine::Instance().getCurrentOperation()->getLineNum(),
 				StackMachine::Instance().getCurrentOperation()->getInstruction(),
 				rhs.toString()
 		);
-	if ((b > 0) && (a < std::numeric_limits<T>::min() + b))
+	if ((b > 0) && (a < std::numeric_limits<Lim>::min() + b))
 		/* `a - b` would underflow */
 		throw AVM::ValueUnderflow(
 				StackMachine::Instance().getCurrentOperation()->getLineNum(),
@@ -269,7 +269,7 @@ static const IOperand*		getOpDiff(const IOperand& lhs,
 	return fo.createOperand(resOpType, res.str());
 }
 
-template <typename T>
+template <typename T, typename Lim>
 static const IOperand*		getOpMul(const IOperand& lhs,
 		const IOperand& rhs,
 		eOperandType resOpType)
@@ -280,14 +280,14 @@ static const IOperand*		getOpMul(const IOperand& lhs,
 	T a, b;
 	ssl >> a; ssr >> b;
 
-	if (a > std::numeric_limits<T>::max() / b)
+	if (a > std::numeric_limits<Lim>::max() / b)
 		/* `a * b` would overflow */
 		throw AVM::ValueOverflow(
 				StackMachine::Instance().getCurrentOperation()->getLineNum(),
 				StackMachine::Instance().getCurrentOperation()->getInstruction(),
 				rhs.toString()
 		);
-	if ((a < std::numeric_limits<T>::min() / b))
+	if ((a < std::numeric_limits<Lim>::min() / b))
 		/* `a * b` would underflow */
 		throw AVM::ValueUnderflow(
 				StackMachine::Instance().getCurrentOperation()->getLineNum(),
@@ -301,7 +301,7 @@ static const IOperand*		getOpMul(const IOperand& lhs,
 	return fo.createOperand(resOpType, res.str());
 }
 
-template <typename T>
+template <typename T, typename Lim>
 static const IOperand*		getOpDiv(const IOperand& lhs,
 		const IOperand& rhs,
 		eOperandType resOpType)
@@ -312,14 +312,14 @@ static const IOperand*		getOpDiv(const IOperand& lhs,
 	T a, b;
 	ssl >> a; ssr >> b;
 
-	if ((b < 0) && (a > std::numeric_limits<T>::max() + b))
+	if ((b < 0) && (a > std::numeric_limits<Lim>::max() + b))
 		/* `a - b` would overflow */
 		throw AVM::ValueOverflow(
 				StackMachine::Instance().getCurrentOperation()->getLineNum(),
 				StackMachine::Instance().getCurrentOperation()->getInstruction(),
 				rhs.toString()
 		);
-	if ((b > 0) && (a < std::numeric_limits<T>::min() + b))
+	if ((b > 0) && (a < std::numeric_limits<Lim>::min() + b))
 		/* `a - b` would underflow */
 		throw AVM::ValueUnderflow(
 				StackMachine::Instance().getCurrentOperation()->getLineNum(),
@@ -339,7 +339,7 @@ static const IOperand*		getOpDiv(const IOperand& lhs,
 	return fo.createOperand(resOpType, res.str());
 }
 
-template <typename T>
+template <typename T, typename Lim>
 static const IOperand*		getOpMod(const IOperand& lhs,
 		const IOperand& rhs,
 		eOperandType resOpType)
