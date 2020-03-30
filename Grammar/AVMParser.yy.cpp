@@ -120,14 +120,32 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "StackMachine.h"
+#include "FactoryOperand.h"
+#include <vector>
+#include <iostream>
+#include "IOperand.h"
+#include "Instruction.h"
 extern int yylex();
 
 
 void yyerror(const char *msg)
 {
-    fprintf(stderr, "%s !!\n", msg);
 }
+
+struct yaccValue
+{
+	std::string val;
+	eOperandType valueType;
+};
+
+struct yaccInstruction
+{
+	struct yaccValue *val;
+	eInstructionType instrType;
+};
+
+std::vector<struct yaccInstruction*> query;
 
 
 
@@ -150,7 +168,16 @@ void yyerror(const char *msg)
 #endif
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+#line 46 "AVMGrammar.y"
+{
+	char *string;
+	struct yaccValue *val;
+	struct yaccInstruction *inst;
+}
+/* Line 193 of yacc.c.  */
+#line 180 "AVMParser.yy.cpp"
+	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1
@@ -162,7 +189,7 @@ typedef int YYSTYPE;
 
 
 /* Line 216 of yacc.c.  */
-#line 166 "AVMParser.yy.cpp"
+#line 193 "AVMParser.yy.cpp"
 
 #ifdef short
 # undef short
@@ -452,9 +479,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    38,    38,    39,    40,    44,    45,    46,    47,    48,
-      49,    50,    51,    52,    53,    54,    58,    60,    62,    64,
-      66
+       0,    62,    62,    70,    71,    75,    79,    83,    87,    91,
+      95,    99,   103,   107,   111,   115,   122,   129,   136,   143,
+     150
 };
 #endif
 
@@ -1377,58 +1404,156 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 38 "AVMGrammar.y"
-    {printf("ok00\n\n");}
+#line 63 "AVMGrammar.y"
+    {
+		std::cerr << "Query found" << std::endl;
+		for (auto ins : query)
+		{
+			std::cerr << static_cast<int>(ins->instrType) << " " << ins->val->val << std::endl;
+		}
+	}
     break;
 
   case 3:
-#line 39 "AVMGrammar.y"
+#line 70 "AVMGrammar.y"
     {printf("ok01\n\n");}
     break;
 
   case 4:
-#line 40 "AVMGrammar.y"
+#line 71 "AVMGrammar.y"
     {printf("ok02\n\n");}
     break;
 
   case 5:
-#line 44 "AVMGrammar.y"
-    {printf("value %d\n", (yyvsp[(2) - (2)]));}
+#line 76 "AVMGrammar.y"
+    {
+		ADD_INS(eInstructionType::push, (yyvsp[(2) - (2)].val)->valueType, (yyvsp[(2) - (2)].val)->val);
+	}
     break;
 
   case 6:
-#line 45 "AVMGrammar.y"
-    {printf("value %d\n", (yyvsp[(1) - (1)]));}
+#line 80 "AVMGrammar.y"
+    {
+		ADD_INS(eInstructionType::pop, eOperandType::None, "");
+	}
+    break;
+
+  case 7:
+#line 84 "AVMGrammar.y"
+    {
+		ADD_INS(eInstructionType::dump, eOperandType::None, "");
+	}
+    break;
+
+  case 8:
+#line 88 "AVMGrammar.y"
+    {
+		ADD_INS(eInstructionType::assert, (yyvsp[(2) - (2)].val)->valueType, (yyvsp[(2) - (2)].val)->val);
+	}
+    break;
+
+  case 9:
+#line 92 "AVMGrammar.y"
+    {
+		ADD_INS(eInstructionType::add, eOperandType::None, "");
+	}
+    break;
+
+  case 10:
+#line 96 "AVMGrammar.y"
+    {
+		ADD_INS(eInstructionType::sub, eOperandType::None, "");
+	}
+    break;
+
+  case 11:
+#line 100 "AVMGrammar.y"
+    {
+		ADD_INS(eInstructionType::mul, eOperandType::None, "");
+	}
+    break;
+
+  case 12:
+#line 104 "AVMGrammar.y"
+    {
+		ADD_INS(eInstructionType::div, eOperandType::None, "");
+	}
+    break;
+
+  case 13:
+#line 108 "AVMGrammar.y"
+    {
+		ADD_INS(eInstructionType::mod, eOperandType::None, "");
+	}
+    break;
+
+  case 14:
+#line 112 "AVMGrammar.y"
+    {
+		ADD_INS(eInstructionType::print, eOperandType::None, "");
+	}
+    break;
+
+  case 15:
+#line 116 "AVMGrammar.y"
+    {
+		ADD_INS(eInstructionType::exit, eOperandType::None, "");
+	}
     break;
 
   case 16:
-#line 59 "AVMGrammar.y"
-    {printf("%d - %d\n", (yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]));}
+#line 123 "AVMGrammar.y"
+    {
+		printf("int8: %s\n", (yyvsp[(3) - (4)].string));
+		(yyval.val) = new yaccValue();
+		(yyval.val)->valueType = eOperandType::Int8;
+		(yyval.val)->val = (yyvsp[(3) - (4)].string);
+	}
     break;
 
   case 17:
-#line 61 "AVMGrammar.y"
-    {printf("%d - %d\n", (yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]));}
+#line 130 "AVMGrammar.y"
+    {
+		printf("int16: %s\n", (yyvsp[(3) - (4)].string));
+		(yyval.val) = new yaccValue();
+		(yyval.val)->valueType = eOperandType::Int16;
+		(yyval.val)->val = (yyvsp[(3) - (4)].string);
+	}
     break;
 
   case 18:
-#line 63 "AVMGrammar.y"
-    {printf("%d - %d\n", (yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]));}
+#line 137 "AVMGrammar.y"
+    {
+		printf("int32: %s\n", (yyvsp[(3) - (4)].string));
+		(yyval.val) = new yaccValue();
+		(yyval.val)->valueType = eOperandType::Int32;
+		(yyval.val)->val = (yyvsp[(3) - (4)].string);
+	}
     break;
 
   case 19:
-#line 65 "AVMGrammar.y"
-    {printf("%d - %d\n", (yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]));}
+#line 144 "AVMGrammar.y"
+    {
+		printf("float: %s\n", (yyvsp[(3) - (4)].string));
+		(yyval.val) = new yaccValue();
+		(yyval.val)->valueType = eOperandType::Float;
+		(yyval.val)->val = (yyvsp[(3) - (4)].string);
+	}
     break;
 
   case 20:
-#line 67 "AVMGrammar.y"
-    {printf("%d - %d\n", (yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]));}
+#line 151 "AVMGrammar.y"
+    {
+		printf("double: %s\n", (yyvsp[(3) - (4)].string));
+		(yyval.val) = new yaccValue();
+		(yyval.val)->valueType = eOperandType::Double;
+		(yyval.val)->val = (yyvsp[(3) - (4)].string);
+	}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1432 "AVMParser.yy.cpp"
+#line 1557 "AVMParser.yy.cpp"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1642,6 +1767,6 @@ yyreturn:
 }
 
 
-#line 70 "AVMGrammar.y"
+#line 159 "AVMGrammar.y"
 
 

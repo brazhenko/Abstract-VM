@@ -44,5 +44,16 @@ public:
 	void Execute();
 };
 
+# define ADD_INS(ITYPE, OTYPE, VALUE) \
+	do { \
+	FactoryOperand fo;\
+	StackMachine::Instance().AddInstruction( \
+			Instruction( \
+			ITYPE, \
+			fo.createOperand(OTYPE, VALUE), \
+			"DEFAULT INSTRUCTION", \
+			-1) \
+	); \
+	} while (0);
 
 #endif //AVM_STACKMACHINE_H

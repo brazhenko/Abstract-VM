@@ -5,27 +5,14 @@
 #include "StackMachine.h"
 
 
-# define ADD_INS(ITYPE, OTYPE, VALUE) { \
-	StackMachine::Instance().AddInstruction( \
-			Instruction( \
-			ITYPE, \
-			fo.createOperand(OTYPE, VALUE), \
-			"DEFAULT INSTRUCTION", \
-			-1) \
-	);\
-}
-
 int yyparse();
 
 int main(int argc, char **argv)
 {
 	yyparse();
 
-
-	return 0;
-
+#if 0
 	AVM::Context context;
-
 	try {
 		context = parseAVMArgv(argc, argv);
 	}
@@ -61,9 +48,8 @@ int main(int argc, char **argv)
 
 		}
 	}
-
 	return 0;
-
+#endif
 
 	try {
 		StackMachine::Instance().Execute();
@@ -84,7 +70,7 @@ int main(int argc, char **argv)
 
 
 
-	FactoryOperand fo;
+//	FactoryOperand fo;
 //	ADD_INS(eInstructionType::push, eOperandType::Int8, "20000")
 //	ADD_INS(eInstructionType::push, eOperandType::Int8, "20000")
 //	ADD_INS(eInstructionType::add, eOperandType::None, "")

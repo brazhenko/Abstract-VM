@@ -89,7 +89,16 @@
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+#line 46 "AVMGrammar.y"
+{
+	char *string;
+	struct yaccValue *val;
+	struct yaccInstruction *inst;
+}
+/* Line 1529 of yacc.c.  */
+#line 101 "AVMParser.yy.hpp"
+	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1

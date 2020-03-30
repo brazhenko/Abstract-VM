@@ -1,10 +1,10 @@
 %{
 #include "AVMLexer.h"
 #include "AVMParser.yy.hpp"
+
 %}
 
 %%
-
 
 "push"					{return AVM_PUSH;}
 "pop"					{return AVM_POP;}
@@ -29,8 +29,14 @@
 
 ;;						{return AVM_EOR;}
 ;.*						{;}
-[-]?[0-9]+ 				{return N;}
-[-]?[0-9]+[.][0-9]+		{return Z;}
+[-]?[0-9]+ 				{
+						yylval.string = strdup(yytext);
+						return N;
+						}
+[-]?[0-9]+[.][0-9]+		{
+						yylval.string = strdup(yytext);
+						return Z;
+						}
 '\n' 					{return SEP;}
 [\t\v\r\f ]+			{;}
 .						{return AVM_UNKNOWN;}

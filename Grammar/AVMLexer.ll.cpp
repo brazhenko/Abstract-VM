@@ -500,7 +500,8 @@ char *yytext;
 #line 2 "AVMLexer.l"
 #include "AVMLexer.h"
 #include "AVMParser.yy.hpp"
-#line 504 "AVMLexer.ll.cpp"
+
+#line 505 "AVMLexer.ll.cpp"
 
 #define INITIAL 0
 
@@ -682,8 +683,7 @@ YY_DECL
 	 char *yy_cp, *yy_bp;
 	 int yy_act;
     
-#line 6 "AVMLexer.l"
-
+#line 7 "AVMLexer.l"
 
 
 #line 690 "AVMLexer.ll.cpp"
@@ -872,35 +872,41 @@ YY_RULE_SETUP
 case 21:
 YY_RULE_SETUP
 #line 32 "AVMLexer.l"
-{return N;}
+{
+						yylval.string = strdup(yytext);
+						return N;
+						}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 33 "AVMLexer.l"
-{return Z;}
+#line 36 "AVMLexer.l"
+{
+						yylval.string = strdup(yytext);
+						return Z;
+						}
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 34 "AVMLexer.l"
+#line 40 "AVMLexer.l"
 {return SEP;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 35 "AVMLexer.l"
+#line 41 "AVMLexer.l"
 {;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 36 "AVMLexer.l"
+#line 42 "AVMLexer.l"
 {return AVM_UNKNOWN;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 38 "AVMLexer.l"
+#line 44 "AVMLexer.l"
 ECHO;
 	YY_BREAK
-#line 904 "AVMLexer.ll.cpp"
+#line 910 "AVMLexer.ll.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1897,7 +1903,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 38 "AVMLexer.l"
+#line 44 "AVMLexer.l"
 
 
 
