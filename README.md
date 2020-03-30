@@ -71,7 +71,7 @@ SEP :='\n'+
 ; - HelloWorld.avm -
 ; ------------------
 push int8(72)	;H
-printX
+print
 push int8(101)	;e
 print
 push int8(108)	;l
