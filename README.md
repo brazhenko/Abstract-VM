@@ -25,7 +25,7 @@ make
 
 ```asm
 instruction dataType(value)
-intruction
+intsruction
 ```
 
 ## Grammar
@@ -98,8 +98,8 @@ print
 push int8(10)	;\n
 print
 exit
-
 ```
+
 ```bash
 ./AVM hello.avm | cat -e
 Hello, World!$
