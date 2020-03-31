@@ -133,30 +133,35 @@ VALUE :
 		$$ = new yaccValue();
 		$$->valueType = eOperandType::Int8;
 		$$->val = $3;
+		free($3);
 	}
 	| AVM_INT16_TYPE AVM_OPEN_BR N AVM_CLOSE_BR
 	{
 		$$ = new yaccValue();
 		$$->valueType = eOperandType::Int16;
 		$$->val = $3;
+		free($3);
 	}
 	| AVM_INT32_TYPE AVM_OPEN_BR N AVM_CLOSE_BR
 	{
 		$$ = new yaccValue();
 		$$->valueType = eOperandType::Int32;
 		$$->val = $3;
+		free($3);
 	}
 	| AVM_FLOAT_TYPE AVM_OPEN_BR Z AVM_CLOSE_BR
 	{
 		$$ = new yaccValue();
 		$$->valueType = eOperandType::Float;
 		$$->val = $3;
+		free($3);
 	}
 	| AVM_DOUBLE_TYPE AVM_OPEN_BR Z AVM_CLOSE_BR
 	{
 		$$ = new yaccValue();
 		$$->valueType = eOperandType::Double;
 		$$->val = $3;
+		free($3);
 	}
 	;
 

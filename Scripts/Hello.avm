@@ -29,4 +29,5 @@ push int8(33)	;!
 print
 push int8(10)	;\n
 print
+
 exit

@@ -2,7 +2,6 @@
 #include "AVMLexer.h"
 #include "AVMParser.yy.hpp"
 #include "Exceptions/AVMException.h"
-int currentLineNum = 1;
 std::string currentLine;
 
 %}
@@ -47,7 +46,7 @@ std::string currentLine;
 						return SEP;
 						}
 [\t\v\r\f ]+			{;}
-.						{throw AVM::LexError(currentLineNum, "DEFAULT LINE", '?');}
+.						{throw AVM::LexError(yylineno, "DEFAULT LINE", '?');}
 
 %%
 
