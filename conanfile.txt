@@ -1,0 +1,8 @@
+[requires]
+
+#flex/2.6.4@bincrafters/stable
+#bison/3.0.4@bincrafters/stable
+
+
+[generators]
+#cmake

@@ -33,7 +33,15 @@
 AVM
 
 
-# Build
+# Build & Service files
 cmake-build-debug/
 build/
 .idea/
+**/*/.DS_Store
+.DS_Store
+buildconan/
+CMakeFiles/
+**/CMakeFiles/
+cmake_isntall.cmake
+**/cmake_install.cmake
+**/Makefile

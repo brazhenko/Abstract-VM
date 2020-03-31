@@ -3,7 +3,6 @@ BUILD_DIR=build
 SOURCE_DIR=$(PWD)
 
 all:
-	make --directory Grammar
 	cmake -B$(BUILD_DIR)
 	cmake --build $(BUILD_DIR)
 	cp $(BUILD_DIR)/$(TARGET) .
@@ -19,4 +18,3 @@ fclean: clean
 	rm -f $(TARGET)
 
 re : fclean all
-

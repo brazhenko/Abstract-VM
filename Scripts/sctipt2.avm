@@ -12,11 +12,8 @@ mul
 mul
 mul
 mul
-assert  float(35.1)
+assert  float(35.2)
 dump
-
-
-
 dump
 dump
 
