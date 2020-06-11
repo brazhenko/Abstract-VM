@@ -35,6 +35,19 @@ public:
 	virtual IOperand const* operator%(const IOperand& rhs) const = 0;
 	// Modulo
 	[[nodiscard]] virtual std::string const & toString() const = 0;
+
+	/// Binary
+//	// &
+//	virtual IOperand const* operator&(const IOperand& rhs) const = 0;
+//	// ^
+//	virtual IOperand const* operator^(const IOperand& rhs) const = 0;
+//	// ~
+//	virtual IOperand const* operator~() const = 0;
+//	// >>
+//	virtual IOperand const* operator>>(const IOperand& rhs) const = 0;
+//	// <<
+//	virtual IOperand const* operator<<(const IOperand& rhs) const = 0;
+
 	// String representation of the instance
 	virtual ~IOperand() = default;
 };
