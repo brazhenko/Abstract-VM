@@ -6,7 +6,8 @@ std::string currentLine;
 
 %}
 %option yylineno
-
+%option nounput
+%option noinput
 %%
 
 "push"					{return AVM_PUSH;}
