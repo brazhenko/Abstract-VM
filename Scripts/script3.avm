@@ -1,0 +1,9 @@
+push int32(42)
+pop
+exit
+push int32(2)
+push int32(2)
+mul
+dump
+pop
+exit
