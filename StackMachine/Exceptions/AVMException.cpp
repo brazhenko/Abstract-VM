@@ -232,3 +232,11 @@ const char *AVM::UnknownOption::what() const throw()
 {
 	return errMsg_.c_str();
 }
+
+AVM::DoubleSemiColonFound::DoubleSemiColonFound()
+{
+	std::stringstream ss;
+
+	ss  << "Empty\n";
+	errMsg_ = ss.str();
+}

@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <Exceptions/AVMException.h>
 #include "StackMachine.h"
 
 int yyparse();
@@ -12,10 +13,14 @@ extern FILE * yyin;
 
 void ExecuteInteractive()
 {
-	std::string line;
+	try
+	{
+		yyin = stdin;
+		yyparse();
+	}
+	catch (AVM::DoubleSemiColonFound&)
+	{}
 
-	yyin = stdin;
-	yyparse();
 	StackMachine::Instance().Execute();
 }
 

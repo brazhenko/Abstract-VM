@@ -140,6 +140,15 @@ namespace AVM
 
 	class NeedHelp : public Exception
 	{};
+
+	class DoubleSemiColonFound : public Exception
+	{
+	public:
+		explicit DoubleSemiColonFound();
+	private:
+		std::string errMsg_;
+	};
+
 }
 
 #endif //AVM_AVMEXCEPTION_H

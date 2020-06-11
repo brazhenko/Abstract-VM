@@ -30,7 +30,7 @@ std::string currentLine;
 "("						{return AVM_OPEN_BR;}
 ")"						{return AVM_CLOSE_BR;}
 
-;;						{return AVM_EOR;}
+;;[\n]					{if (yyin == stdin) throw AVM::DoubleSemiColonFound();}
 ;[^\n]+[\n]				{
 						return COMMENT;
 						}

@@ -54,7 +54,6 @@ struct yaccValue
 %type <val> VALUE
 %type <inst> INSTR
 
-
 %%
 
 S :
