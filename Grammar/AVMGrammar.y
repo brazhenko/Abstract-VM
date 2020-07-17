@@ -123,6 +123,7 @@ INSTR :
 	| AVM_EXIT
 	{
 		ADD_INS(eInstructionType::exit, eOperandType::None, "", yylineno);
+		return 0;
 	}
 	;
 
