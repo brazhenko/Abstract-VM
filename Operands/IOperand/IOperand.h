@@ -7,15 +7,7 @@
 
 #include <string>
 
-enum class eOperandType
-{
-	Int8,
-	Int16,
-	Int32,
-	Float,
-	Double,
-	None
-};
+enum eOperandType {Int8, Int16, Int32, Float, Double, None};
 
 class IOperand
 {
@@ -35,8 +27,6 @@ public:
 	virtual IOperand const* operator%(const IOperand& rhs) const = 0;
 	// Modulo
 	[[nodiscard]] virtual std::string const & toString() const = 0;
-
-	/// Binary
 //	// &
 //	virtual IOperand const* operator&(const IOperand& rhs) const = 0;
 //	// ^

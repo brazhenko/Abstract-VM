@@ -18,7 +18,7 @@ void ExecuteInteractive()
 		yyin = stdin;
 		yyparse();
 	}
-	catch (AVM::DoubleSemiColonFound&)
+	catch (const AVM::DoubleSemiColonFound &)
 	{}
 
 	StackMachine::Instance().Execute();

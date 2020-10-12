@@ -50,7 +50,7 @@ public:
 
 # define ADD_INS(ITYPE, OTYPE, VALUE, LINENUM) \
 	do { \
-	FactoryOperand fo;\
+	OperandFactory fo;\
 	StackMachine::Instance().AddInstruction( \
 			Instruction( \
 			ITYPE, \

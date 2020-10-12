@@ -42,18 +42,6 @@ AVM::Context parseAVMArgv(int argc, char **argv)
 		ret.filesToExecute.emplace_back(argv[index]);
 	}
 
-	std::cerr << "DEBUG" << std::endl;
-	for (const auto& f: ret.filesToOptimize)
-	{
-		std::cerr<< f << " ";
-	}
-	std::cerr << std::endl;
-	for (const auto& f: ret.filesToExecute)
-	{
-		std::cerr << f << " ";
-	}
-	std::cerr << std::endl;
-
 	return ret;
 
 }

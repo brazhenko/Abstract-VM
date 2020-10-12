@@ -1,27 +1,32 @@
 //
 // Created by 17641238 on 25.03.2020.
 //
+#ifndef OPERANDFACTORY_H
+# define OPERANDFACTORY_H
 
-#ifndef AVM_FACTORYOPERAND_H
-#define AVM_FACTORYOPERAND_H
+# include "IOperand/IOperand.h"
 
-#include <IOperand/IOperand.h>
-#include <vector>
+# ifndef OPERANDFACTORY_H_DEFINED
+#  define OPERANDFACTORY_H_DEFINED
+class OperandFactory;
+#  include "Operand.hpp"
+# endif
 
-# define MAX(X, Y) ((X) > (Y) ? (X) : (Y))
-
-class FactoryOperand
-{
+class OperandFactory {
 public:
-	[[nodiscard]] const IOperand* createOperand(eOperandType type, const std::string& value) const;
-private:
-	[[nodiscard]] const IOperand* createInt16(const std::string& value) const;
-	[[nodiscard]] const IOperand* createInt32(const std::string& value) const;
-	[[nodiscard]] const IOperand* createFloat(const std::string& value) const;
-	[[nodiscard]] const IOperand* createDouble(const std::string& value) const;
-	[[nodiscard]] const IOperand* createInt8(const std::string& value) const;
+	typedef IOperand const * (OperandFactory::*IOPFP)(std::string const &) const;
+	OperandFactory( void );
+	OperandFactory( OperandFactory const & obj );
+	~OperandFactory( void );
+	OperandFactory & operator=( OperandFactory const & rhs );
 
-	std::vector<std::function<const IOperand* (const std::string& value)>> ctors;
+	IOperand const * createOperand( eOperandType type, std::string const & value ) const;
+private:
+	IOperand const * createInt8( std::string const & value ) const;
+	IOperand const * createInt16( std::string const & value ) const;
+	IOperand const * createInt32( std::string const & value ) const;
+	IOperand const * createFloat( std::string const & value ) const;
+	IOperand const * createDouble( std::string const & value ) const;
 };
 
-#endif //AVM_FACTORYOPERAND_H
+#endif

@@ -1,58 +1,46 @@
-//
-// Created by 17641238 on 25.03.2020.
-//
 
-#include <sstream>
 #include "FactoryOperand.h"
 #include "Operand.hpp"
+#include "Exceptions/AVMException.h"
+#include <iostream>
+#include <cerrno>
 
-const IOperand *
-FactoryOperand::createOperand(eOperandType type, const std::string& value) const
-{
-	switch (type)
-	{
-	case eOperandType::Int8:
-		return createInt8(value);
-	case eOperandType::Int16:
-		return createInt16(value);
-	case eOperandType::Int32:
-		return createInt32(value);
-	case eOperandType::Float:
-		return createFloat(value);
-	case eOperandType::Double:
-		return createDouble(value);
-	default:
-		return nullptr;
+OperandFactory::OperandFactory( void ) {}
+OperandFactory::OperandFactory( OperandFactory const & obj ) { static_cast<void>(obj); }
+OperandFactory::~OperandFactory( void ) {}
+OperandFactory & OperandFactory::operator=( OperandFactory const & rhs ) { static_cast<void>(rhs); return *this; }
+
+IOperand const * OperandFactory::createInt8( std::string const & value ) const {
+	return new Operand<int8_t>(std::stoi(value));
+}
+IOperand const * OperandFactory::createInt16( std::string const & value ) const {
+	return new Operand<int16_t>(std::stoi(value));
+}
+IOperand const * OperandFactory::createInt32( std::string const & value ) const {
+	return new Operand<int32_t>(std::stoi(value));
+}
+IOperand const * OperandFactory::createFloat( std::string const & value ) const {
+	return new Operand<float>(std::stof(value));
+}
+IOperand const * OperandFactory::createDouble( std::string const & value ) const {
+	return new Operand<double>(std::stod(value));
+}
+IOperand const * OperandFactory::createOperand( eOperandType type, std::string const & value ) const {
+	static IOPFP creators[] = {
+			&OperandFactory::createInt8,
+			&OperandFactory::createInt16,
+			&OperandFactory::createInt32,
+			&OperandFactory::createFloat,
+			&OperandFactory::createDouble
+	};
+	IOperand const * created = nullptr;
+	try {
+		IOPFP func = creators[type];
+		if (type == eOperandType::None) return nullptr;
+		created = (this->*func)(value);
+	} catch(std::exception & e) {
+		// std::cout << errno << ": " << strerror(errno) << std::endl << e.what() << std::endl;
+		throw AVM::UnknownOption(1);
 	}
+	return created;
 }
-
-const IOperand *FactoryOperand::createInt8(const std::string& value) const
-{
-	IOperand* ptr = new Operand<int, eOperandType::Int8>(value);
-	return ptr;
-}
-
-const IOperand *FactoryOperand::createInt16(const std::string& value) const
-{
-	IOperand* ptr = new Operand<int, eOperandType::Int16>(value);
-	return ptr;
-}
-
-const IOperand *FactoryOperand::createInt32(const std::string& value) const
-{
-	IOperand* ptr = new Operand<int, eOperandType::Int32>(value);
-	return ptr;
-}
-
-const IOperand *FactoryOperand::createFloat(const std::string& value) const
-{
-	IOperand* ptr = new Operand<int, eOperandType::Float>(value);
-	return ptr;
-}
-
-const IOperand *FactoryOperand::createDouble(const std::string& value) const
-{
-	IOperand* ptr = new Operand<int, eOperandType::Double>(value);
-	return ptr;
-}
-
