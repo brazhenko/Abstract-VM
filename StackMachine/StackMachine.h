@@ -10,6 +10,7 @@
 #include <vector>
 #include "IOperand.h"
 #include "Instruction.h"
+#include "Exceptions/AVMException.h"
 
 /*
  * Singletone class for Abstract-VM stack.
@@ -50,14 +51,22 @@ public:
 
 # define ADD_INS(ITYPE, OTYPE, VALUE, LINENUM) \
 	do { \
-	OperandFactory fo;\
-	StackMachine::Instance().AddInstruction( \
-			Instruction( \
-			ITYPE, \
-			fo.createOperand(OTYPE, VALUE), \
-			"DEFAULT INSTRUCTION", \
-			LINENUM) \
+	try{\
+		OperandFactory fo;\
+		StackMachine::Instance().AddInstruction( \
+		Instruction( \
+		ITYPE, \
+		fo.createOperand(OTYPE, VALUE), \
+		"DEFAULT INSTRUCTION", \
+		LINENUM) \
 	); \
+	std::cout << "LINENUM:" << LINENUM << std::endl;\
+	std::cout << "VALUE:" << VALUE << std::endl;\
+	} catch(const std::out_of_range &e) { \
+		throw AVM::ValueOverflow(LINENUM, "1", "1");\
+		} \
+		catch(...) \
+		{ std::cerr << "Unknown error, exit...\n"; std::exit(1);}\
 	} while (0);
 
 #endif //AVM_STACKMACHINE_H

@@ -132,7 +132,7 @@ void StackMachine::Sub()
 	stack_.pop_back();
 	auto b = stack_.back();
 	stack_.pop_back();
-	auto res = *a - *b;
+	auto res = *b - *a;
 	stack_.emplace_back(res);
 }
 
@@ -164,7 +164,7 @@ void StackMachine::Div()
 	stack_.pop_back();
 	auto b = stack_.back();
 	stack_.pop_back();
-	auto res = *a / *b;
+	auto res = *b / *a;
 	stack_.emplace_back(res);
 }
 
@@ -180,7 +180,7 @@ void StackMachine::Mod()
 	stack_.pop_back();
 	auto b = stack_.back();
 	stack_.pop_back();
-	auto res = *a % *b;
+	auto res = *b % *a;
 	stack_.emplace_back(res);
 }
 
@@ -210,5 +210,3 @@ std::vector<Instruction>::iterator StackMachine::getCurrentOperation()
 {
 	return op;
 }
-
-

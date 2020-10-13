@@ -1,9 +1,8 @@
 
+#include <iostream>
 #include "FactoryOperand.h"
 #include "Operand.hpp"
 #include "Exceptions/AVMException.h"
-#include <iostream>
-#include <cerrno>
 
 OperandFactory::OperandFactory( void ) {}
 OperandFactory::OperandFactory( OperandFactory const & obj ) { static_cast<void>(obj); }
@@ -20,10 +19,10 @@ IOperand const * OperandFactory::createInt32( std::string const & value ) const 
 	return new Operand<int32_t>(std::stoi(value));
 }
 IOperand const * OperandFactory::createFloat( std::string const & value ) const {
-	return new Operand<float>(std::stof(value));
+	return new Operand<float>(std::stoi(value));
 }
 IOperand const * OperandFactory::createDouble( std::string const & value ) const {
-	return new Operand<double>(std::stod(value));
+	return new Operand<double>(std::stoi(value));
 }
 IOperand const * OperandFactory::createOperand( eOperandType type, std::string const & value ) const {
 	static IOPFP creators[] = {
@@ -38,9 +37,8 @@ IOperand const * OperandFactory::createOperand( eOperandType type, std::string c
 		IOPFP func = creators[type];
 		if (type == eOperandType::None) return nullptr;
 		created = (this->*func)(value);
-	} catch(std::exception & e) {
-		// std::cout << errno << ": " << strerror(errno) << std::endl << e.what() << std::endl;
-		throw AVM::UnknownOption(1);
+	} catch(const std::exception &) {
+		throw;
 	}
 	return created;
 }

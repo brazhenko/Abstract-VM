@@ -1,0 +1,8 @@
+
+
+push int16(9)
+push int16(999999999999999999999999999)
+exit
+
+Does the program stops properly because of the overflow error?
+

@@ -1,6 +1,7 @@
 //
 // Created by 17641238 on 25.03.2020.
 //
+
 #ifndef OPERANDFACTORY_H
 # define OPERANDFACTORY_H
 
@@ -8,6 +9,7 @@
 
 # ifndef OPERANDFACTORY_H_DEFINED
 #  define OPERANDFACTORY_H_DEFINED
+
 class OperandFactory;
 #  include "Operand.hpp"
 # endif

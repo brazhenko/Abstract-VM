@@ -87,10 +87,6 @@ template<class T> std::string const & Operand<T>::toString( void ) const {
 	return this->_value;
 }
 
-//****************************
-// CLASS TEMPLATE SPECIALIZATION
-//****************************
-
 template<> int			Operand<int8_t>::getPrecision( void ) const		{ return Int8; }
 template<> eOperandType	Operand<int8_t>::getType( void ) const			{ return Int8; }
 
@@ -106,9 +102,6 @@ template<> eOperandType	Operand<float>::getType( void ) const			{ return Float; 
 template<> int			Operand<double>::getPrecision( void ) const		{ return Double; }
 template<> eOperandType	Operand<double>::getType( void ) const			{ return Double; }
 
-//****************************
-// CLASS TEMPLATE HARD DECLARATION
-//****************************
 
 template class Operand<int8_t>;
 template class Operand<int16_t>;

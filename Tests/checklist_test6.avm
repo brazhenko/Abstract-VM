@@ -1,0 +1,8 @@
+
+
+push int32(42)
+assert int32(0)
+exit
+
+Does the program stops properly on an assert error?
+
