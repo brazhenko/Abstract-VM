@@ -11,15 +11,16 @@
 namespace AVM
 {
 	class Exception : public std::exception
-	{};
+	{
+	public:
+		std::string errMsg_;
+	};
 
 	class LexError : public Exception
 	{
 	public:
 		LexError(int lineNum, const std::string &line, char c);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 	};
 
 	class SyntaxError : public Exception
@@ -27,8 +28,6 @@ namespace AVM
 	public:
 		SyntaxError(int lineNum, const std::string &line, const std::string& token);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 	};
 
 	class InstructionUnknown : public Exception
@@ -38,8 +37,6 @@ namespace AVM
 				const std::string& line,
 				const std::string &instruction);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 	};
 
 	class ValueOverflow : public Exception
@@ -49,8 +46,6 @@ namespace AVM
 				const std::string& line,
 				const std::string& value);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 	};
 
 	class ValueUnderflow : public Exception
@@ -60,8 +55,6 @@ namespace AVM
 				const std::string& line,
 				const std::string& value);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 	};
 
 	class EmptyStack : public Exception
@@ -69,8 +62,6 @@ namespace AVM
 	public:
 		EmptyStack(int lineNum, const std::string& line);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 	};
 
 	class DivisionByZero : public Exception
@@ -78,8 +69,6 @@ namespace AVM
 	public:
 		DivisionByZero(int lineNum, const std::string& instruction);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 	};
 
 	class NoExitInstruction : public Exception
@@ -88,8 +77,6 @@ namespace AVM
 		NoExitInstruction();
 		[[nodiscard]] const char *what() const throw() override;
 
-	private:
-		std::string errMsg_;
 	};
 
 	class AssertFailed : public Exception
@@ -97,8 +84,6 @@ namespace AVM
 	public:
 		AssertFailed(int lineNum, const std::string &line);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 
 	};
 
@@ -107,8 +92,6 @@ namespace AVM
 	public:
 		LessThanTwoValuesForBinExp(int lineNum, const std::string& line);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 	};
 
 	class InvalidOperandsForBinExp : public Exception
@@ -116,8 +99,6 @@ namespace AVM
 	public:
 		InvalidOperandsForBinExp(int lineNum, const std::string& line);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 	};
 
 	class OptionRequiresAnArguement : public Exception
@@ -125,8 +106,6 @@ namespace AVM
 	public:
 		explicit OptionRequiresAnArguement(char c);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 	};
 
 	class UnknownOption : public Exception
@@ -134,8 +113,6 @@ namespace AVM
 	public:
 		explicit UnknownOption(int c);
 		[[nodiscard]] const char *what() const throw() override;
-	private:
-		std::string errMsg_;
 	};
 
 	class NeedHelp : public Exception
@@ -145,8 +122,6 @@ namespace AVM
 	{
 	public:
 		explicit DoubleSemiColonFound();
-	private:
-		std::string errMsg_;
 	};
 
 }
