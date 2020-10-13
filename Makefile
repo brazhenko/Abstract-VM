@@ -1,4 +1,4 @@
-TARGET=AVM
+TARGET=avm
 BUILD_DIR=build
 SOURCE_DIR=$(PWD)
 

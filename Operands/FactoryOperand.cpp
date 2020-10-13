@@ -19,13 +19,13 @@ IOperand const * OperandFactory::createInt32( std::string const & value ) const 
 	return new Operand<int32_t>(std::stoi(value));
 }
 IOperand const * OperandFactory::createFloat( std::string const & value ) const {
-	return new Operand<float>(std::stoi(value));
+	return new Operand<float>(std::stof(value));
 }
 IOperand const * OperandFactory::createDouble( std::string const & value ) const {
-	return new Operand<double>(std::stoi(value));
+	return new Operand<double>(std::stod(value));
 }
 IOperand const * OperandFactory::createOperand( eOperandType type, std::string const & value ) const {
-	static IOPFP creators[] = {
+	static creator creators[] = {
 			&OperandFactory::createInt8,
 			&OperandFactory::createInt16,
 			&OperandFactory::createInt32,
@@ -34,7 +34,7 @@ IOperand const * OperandFactory::createOperand( eOperandType type, std::string c
 	};
 	IOperand const * created = nullptr;
 	try {
-		IOPFP func = creators[type];
+		creator func = creators[type];
 		if (type == eOperandType::None) return nullptr;
 		created = (this->*func)(value);
 	} catch(const std::exception &) {

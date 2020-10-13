@@ -60,8 +60,6 @@ public:
 		"DEFAULT INSTRUCTION", \
 		LINENUM) \
 	); \
-	std::cout << "LINENUM:" << LINENUM << std::endl;\
-	std::cout << "VALUE:" << VALUE << std::endl;\
 	} catch(const std::out_of_range &e) { \
 		throw AVM::ValueOverflow(LINENUM, "1", "1");\
 		} \

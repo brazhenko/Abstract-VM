@@ -16,7 +16,7 @@ class OperandFactory;
 
 class OperandFactory {
 public:
-	typedef IOperand const * (OperandFactory::*IOPFP)(std::string const &) const;
+	typedef IOperand const * (OperandFactory::*creator)(std::string const &) const;
 	OperandFactory( void );
 	OperandFactory( OperandFactory const & obj );
 	~OperandFactory( void );

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-project(AVM)
+project(avm)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -26,7 +26,7 @@ include(Grammar/grammar.cmake)
 add_executable(${PROJECT_NAME} ${AVM_SOURCES} ${AVM_HEADERS})
 #target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
 
-#target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic -Werror)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic -Werror)
 
 add_dependencies(${PROJECT_NAME} Grammar)
 #add_dependencies(${PROJECT_NAME} generateAVMGrammar)
